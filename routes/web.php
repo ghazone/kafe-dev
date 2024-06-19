@@ -22,7 +22,6 @@ Route::get('/todo', function () {
 
 Route::middleware('auth')->group(function () {
 
-<<<<<<< HEAD
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
 Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
@@ -30,7 +29,6 @@ Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.dele
 
 
 
-=======
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -51,4 +49,3 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 require __DIR__ . '/auth.php';
->>>>>>> 2186426189d396ff48b4e53172cf0af9808984d5
