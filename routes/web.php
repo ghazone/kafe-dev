@@ -22,4 +22,10 @@ Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.dele
 
 Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
 
-Route::get('/menu', [MenuController::class, 'index'])->name('Menu');
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
+Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
+Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
+
+
+

@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menu', function (Blueprint $table) {
-            $table->id('id_menu');
-            $table->text('Nama_menu');
-            $table->integer('harga');
+            $table->id();
+            $table->string('Nama_menu'); // Pastikan nama kolom sesuai
+            $table->decimal('harga', 8, 2);
             $table->text('deskripsi');
-            $table->boolean('is_done')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('menu');
     }
 };
