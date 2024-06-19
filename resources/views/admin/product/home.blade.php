@@ -9,7 +9,39 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    Content
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h1 class="mb-0">List Produk</h1>
+                        <a href="{{ route('admin.product.create') }}" class="btn btn-primary">Add Product</a>
+                    </div>
+                    <hr />
+                    @if (Session::has('succes'))
+                        <div class="alert alert-succes" role="alert">
+                            {{ Session::get('succes') }}
+                        </div>
+                    @endif
+                    <table class="table table-hover">
+                        <tbody>
+                            @forelse ($products as $product)
+                                <tr>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">{{ $product->title }}</td>
+                                    <td class="align-middle">{{ $product->category }}</td>
+                                    <td class="align-middle">{{ $product->price }}</td>
+                                    <td class="align-middle">
+                                        <div class="btn-grub" role="group" aia-label="Basic-example">
+                                            <a href="" type="button" class="btn btn-secondary">Edit</a>
+                                            <a href="" type="button" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td class="text-center" colspan="5">Product not found</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+
+                    </table>
                 </div>
             </div>
         </div>
