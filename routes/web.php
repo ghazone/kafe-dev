@@ -17,6 +17,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+    Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
+    Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
+    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
+
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
