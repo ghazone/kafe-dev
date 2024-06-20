@@ -1,9 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <div class="flex items-center">
+            <a href="{{ route('dashboard') }}" class="text-gray-800 hover:text-gray-600" style="text-decoration: none;">
+                <h2 class="font-semibold text-xl leading-tight">
+                    {{ __('Dashboard') }}
+                </h2>
+            </a>
+            <a href="{{ route('menu') }}" class="ml-4 no-underline text-gray-800 hover:text-gray-600"
+                style="text-decoration: none;">
+                <h2 class="font-semibold text-xl leading-tight">
+                    {{ __('Menu') }}
+                </h2>
+            </a>
+        </div>
     </x-slot>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

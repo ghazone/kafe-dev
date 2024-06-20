@@ -6,52 +6,58 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h1 class="mb-0">Add Produk</h1>
-                    <hr />
-                    @if (session()->has('error'))
-                        <div>
-                            {{ session('error') }}
-                        </div>
-                    @endif
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="mb-4">Add Product</h1>
+                            <hr />
 
-                    <p><a href="{{ route('admin.product') }}" class="btn btn-primary">Go Back</a></p>
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
 
-                    <form action="{{ route('admin.product.save') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row mb-3">
-                            <div class="col">
-                                <input type="text" name="tittle" class="form-control" placeholder="Tittle">
-                                @error('tittle')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <input type="text" name="Category" class="form-control" placeholder="Category">
-                                @error('category')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <input type="text" name="Price" class="form-control" placeholder="Price">
-                                @error('price')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
+                            <a href="{{ route('admin.product') }}" class="btn btn-primary mb-3">Go Back</a>
 
-                        <div class="row">
-                            <div class="d-grid">
-                                <button class="btn btn-primary">Submit</button>
-                            </div>
+                            <form action="{{ route('admin.product.save') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" id="title" name="title" class="form-control"
+                                        placeholder="Title">
+                                    @error('title')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Category</label>
+                                    <input type="text" id="category" name="category" class="form-control"
+                                        placeholder="Category">
+                                    @error('category')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="text" id="price" name="price" class="form-control"
+                                        placeholder="Price">
+                                    @error('price')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
