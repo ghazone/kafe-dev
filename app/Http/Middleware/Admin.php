@@ -19,6 +19,6 @@ class Admin
         if (Auth::check() && Auth::user()->usertype == 'admin') {
             return $next($request);
         }
-        return redirect('/dashboard'); // Ganti dengan rute yang sesuai untuk non-admin
+        return redirect('/login'); // Ganti dengan rute yang sesuai untuk non-admin
     }
 }

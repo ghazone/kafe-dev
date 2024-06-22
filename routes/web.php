@@ -22,8 +22,10 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
-    Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
-    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
+    // Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
+    
+
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -35,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.delete');
 
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
+
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -44,6 +47,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
     Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
+    Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
+    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
     // Route::get('/pesanan', [PesananController::class, 'index'])->name('admin.pesanan');
 });
 
