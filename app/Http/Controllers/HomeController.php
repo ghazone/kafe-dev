@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Return_;
+use App\Models\Menu;
 
 class HomeController extends Controller
 {
@@ -15,5 +15,14 @@ class HomeController extends Controller
     public function homepage()
     {
         return view('user.hompage');
+    }
+
+    public function index()
+    {
+        // Mengambil semua data menu
+        $menus = Menu::all();
+
+        // Mengirimkan data ke view admin.product.menu
+        return view('admin.product.menu', compact('menus'));
     }
 }

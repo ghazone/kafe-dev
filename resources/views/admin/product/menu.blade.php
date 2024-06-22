@@ -69,7 +69,7 @@
                         </form>
 
                         <ul class="list-group mb-4" id="todo-list">
-                            @foreach ($data as $item)
+                            @foreach ($menus as $item)
                                 <!-- 04. Display Data -->
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span class="task-text">{{ $item->Nama_menu }}</span>

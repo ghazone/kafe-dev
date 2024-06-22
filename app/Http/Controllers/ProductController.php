@@ -11,7 +11,7 @@ class ProductController extends Controller
     {
         $products = Product::orderBy('id', 'desc')->get();
         $total = Product::count();
-        return view('admin.product.home', compact('products', 'total'));
+        return view('admin.home', compact('data'));
     }
 
     public function create()
@@ -22,17 +22,19 @@ class ProductController extends Controller
     public function save(Request $request)
     {
         $validation = $request->validate([
-            'tittle' => 'required',
+            'title' => 'required',
             'category' => 'required',
             'price' => 'required',
         ]);
+
         $data = Product::create($validation);
+
         if ($data) {
-            session()->flash('succes', 'Product Add Successfully');
-            return redirect(route('admin/product'));
+            session()->flash('success', 'Product added successfully');
+            return redirect(route('admin.product.index'));
         } else {
-            session()->flash('error', 'Some problem occure');
-            return redirect(route('admin.product/create'));
+            session()->flash('error', 'Some problem occurred');
+            return redirect(route('admin.product.create'));
         }
     }
 }
