@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-weight-bold h5 text-dark leading-tight">
-            {{ __('Menu') }}
+            {{ __('Pesanan') }}
         </h2>
     </x-slot>
 
     <div class="container mt-4">
         <!-- 01. Content-->
-        <h1 class="text-center mb-4">Menu</h1>
+        <h1 class="text-center mb-4">Pesanan</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-3">
@@ -38,7 +38,6 @@
                     </div>
                 </div>
                 <li class="list-group-item collapse" id="collapse-2">
-
                     <form id="todo-form" action="{{ route('menu.post') }}" method="post">
                         @csrf
                         <div>
@@ -46,7 +45,7 @@
                                 <div>Nama</div>
                                 <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
                                 <div>Harga</div>
-                                <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
+                                <input type="text" class="form-control" name="harga" value="{{ old('harga') }}">
                                 <div>Deskripsi</div>
                                 <input type="text" class="form-control" name="deskripsi"
                                     value="{{ old('deskripsi') }}">
@@ -72,11 +71,13 @@
                             @foreach ($menus as $item)
                                 <!-- 04. Display Data -->
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span class="task-text">{{ $item->Nama_menu }}</span>
-                                    <input type="text" class="form-control edit-input" style="display: none;"
-                                        value="{{ $item->Nama_menu }}">
+                                    <div>
+                                        <strong>Nama:</strong> {{ $item->Nama_menu }}<br>
+                                        <strong>Harga:</strong> {{ $item->harga }}<br>
+                                        <strong>Deskripsi:</strong> {{ $item->deskripsi }}
+                                    </div>
                                     <div class="btn-group">
-                                        <form action="{{ route('menu.delete', ['id_menu' => $item->id_menu]) }}"
+                                        <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
                                             method="POST"
                                             onsubmit="return confirm('Apakah Anda yakin untuk menghapus menu ini?')">
                                             @csrf
@@ -90,8 +91,7 @@
                                 </li>
                                 <!-- 05. Update Data -->
                                 <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
-                                    <form action="{{ route('menu.update', ['id_menu' => $item->id_menu]) }}"
-                                        method="POST">
+                                    <form action="{{ route('menu.update', ['id' => $item->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div>
@@ -100,7 +100,7 @@
                                                 <input type="text" class="form-control" name="nama"
                                                     value="{{ $item->Nama_menu }}">
                                             </div>
-                                            <div>harga</div>
+                                            <div>Harga</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="harga"
                                                     value="{{ $item->harga }}">
@@ -116,8 +116,6 @@
                                 </li>
                             @endforeach
                         </ul>
-
-
                     </div>
                 </div>
             </div>

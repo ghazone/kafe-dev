@@ -44,11 +44,11 @@
                             <div class="input-group mb-3">
                                 <div>Nama</div>
                                 <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
-                                <div>Harga</div>
-                                <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
-                                <div>Deskripsi</div>
-                                <input type="text" class="form-control" name="deskripsi"
-                                    value="{{ old('deskripsi') }}">
+                                <div>Email</div>
+                                <input type="text" class="form-control" name="email" value="{{ old('email') }}">
+                                <div>Status</div>
+                                <input type="text" class="form-control" name="usertype"
+                                    value="{{ old('usertype') }}">
                                 <button class="btn btn-outline-primary" type="submit">Confirm</button>
                             </div>
                         </div>

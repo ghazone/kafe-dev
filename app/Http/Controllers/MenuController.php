@@ -2,96 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
 use Illuminate\Http\Request;
+use App\Models\Menu; // Sesuaikan dengan nama model Anda
 
 class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $data = Menu::orderBy('Nama_menu', 'asc')->get();
-        return view("todo.Umenu", ['data' => $data]);
+        $menus = Menu::all();
+        return view('admin.product.menu', compact('menus'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        // Validasi dan simpan data
         $request->validate([
-            'nama' => 'required|min:2',
+            'nama' => 'required|string|max:255',
             'harga' => 'required|numeric',
-            'deskripsi' => 'required|min:2'
+            'deskripsi' => 'nullable|string',
         ]);
 
-        $data = [
-            'Nama_menu' => $request->input('nama'),
-            'harga' => $request->input('harga'),
-            'deskripsi' => $request->input('deskripsi')
-        ];
+        Menu::create($request->all());
 
-        Menu::create($data);
-
-        return redirect()->route('menu')->with('success', 'Berhasil Tambah Menu');
+        return redirect()->route('menu')->with('success', 'Menu berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
+        // Validasi dan update data
         $request->validate([
-            'nama' => 'required|min:2',
+            'nama' => 'required|string|max:255',
             'harga' => 'required|numeric',
-            'deskripsi' => 'required|min:2'
+            'deskripsi' => 'nullable|string',
         ]);
 
-        $data = [
-            'Nama_menu' => $request->input('nama'),
-            'harga' => $request->input('harga'),
-            'deskripsi' => $request->input('deskripsi')
-        ];
+        $menu = Menu::findOrFail($id);
+        $menu->update($request->all());
 
-        Menu::where('id_menu', $id)->update($data);
-
-        return redirect()->route('menu')->with('success', 'Berhasil Update');
+        return redirect()->route('menu')->with('success', 'Menu berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        Menu::where('id_menu', $id)->delete();
+        // Hapus data
+        $menu = Menu::findOrFail($id);
+        $menu->delete();
 
-        return redirect()->route('menu')->with('success', 'Berhasil delete');
+        return redirect()->route('menu')->with('success', 'Menu berhasil dihapus');
     }
 }
