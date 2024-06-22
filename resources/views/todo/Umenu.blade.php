@@ -30,10 +30,10 @@
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
-                            <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
-                                data-bs-target="#collapse-2" aria-expanded="false">
+                            <a class="btn btn-primary" type="submit" data-bs-toggle="collapse"
+                                href="#collapse-2" aria-expanded="false">
                                 Tambah
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -41,17 +41,15 @@
 
                     <form id="todo-form" action="{{ route('menu.post') }}" method="post">
                         @csrf
-                        <div>
-                            <div class="input-group mb-3">
-                                <div>Nama</div>
-                                <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
-                                <div>Harga</div>
-                                <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
-                                <div>Deskripsi</div>
-                                <input type="text" class="form-control" name="deskripsi"
-                                    value="{{ old('deskripsi') }}">
-                                <button class="btn btn-outline-primary" type="submit">Confirm</button>
-                            </div>
+                        <div class="input-group mb-3">
+                            <div>Nama</div>
+                            <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
+                            <div>Harga</div>
+                            <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
+                            <div>Deskripsi</div>
+                            <input type="text" class="form-control" name="deskripsi"
+                                value="{{ old('deskripsi') }}">
+                            <button class="btn btn-outline-primary" type="submit">Confirm</button>
                         </div>
                     </form>
                 </li>
@@ -76,7 +74,7 @@
                                     <input type="text" class="form-control edit-input" style="display: none;"
                                         value="{{ $item->Nama_menu }}">
                                     <div class="btn-group">
-                                        <form action="{{ route('menu.delete', ['id' => $item->id_menu]) }}"
+                                        <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
                                             method="POST" onsubmit="return confirm('Afakah yakin ?')">
                                             @csrf
                                             @method('delete')
@@ -89,7 +87,7 @@
                                 </li>
                                 <!-- 05. Update Data -->
                                 <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
-                                    <form action="{{ route('menu.update', ['id' => $item->id_menu]) }}" method="POST">
+                                    <form action="{{ route('menu.update', ['id' => $item->id]) }}" method="POST">
                                         @csrf
                                         @method('put')
                                         <div>
