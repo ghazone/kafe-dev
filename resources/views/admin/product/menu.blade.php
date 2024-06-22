@@ -76,10 +76,11 @@
                                     <input type="text" class="form-control edit-input" style="display: none;"
                                         value="{{ $item->Nama_menu }}">
                                     <div class="btn-group">
-                                        <form action="{{ route('menu.delete', ['id' => $item->id_menu]) }}"
-                                            method="POST" onsubmit="return confirm('Afakah yakin ?')">
+                                        <form action="{{ route('menu.delete', ['id_menu' => $item->id_menu]) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Apakah Anda yakin untuk menghapus menu ini?')">
                                             @csrf
-                                            @method('delete')
+                                            @method('DELETE')
                                             <button class="btn btn-danger btn-sm delete-btn">Delete</button>
                                         </form>
                                         <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
@@ -89,24 +90,25 @@
                                 </li>
                                 <!-- 05. Update Data -->
                                 <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
-                                    <form action="{{ route('menu.update', ['id' => $item->id_menu]) }}" method="POST">
+                                    <form action="{{ route('menu.update', ['id_menu' => $item->id_menu]) }}"
+                                        method="POST">
                                         @csrf
-                                        @method('put')
+                                        @method('PUT')
                                         <div>
                                             <div>Nama</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="nama"
-                                                    value={{ $item->Nama_menu }}>
+                                                    value="{{ $item->Nama_menu }}">
                                             </div>
                                             <div>harga</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="harga"
-                                                    value={{ $item->harga }}>
+                                                    value="{{ $item->harga }}">
                                             </div>
                                             <div>Deskripsi</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="deskripsi"
-                                                    value={{ $item->deskripsi }}>
+                                                    value="{{ $item->deskripsi }}">
                                             </div>
                                         </div>
                                         <button class="btn btn-outline-primary" type="submit">Update</button>

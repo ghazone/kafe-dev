@@ -69,14 +69,14 @@
                         </form>
 
                         <ul class="list-group mb-4" id="todo-list">
-                            @foreach ($data as $item)
+                            @foreach ($menus as $item)
                                 <!-- 04. Display Data -->
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span class="task-text">{{ $item->Nama_menu }}</span>
                                     <input type="text" class="form-control edit-input" style="display: none;"
                                         value="{{ $item->Nama_menu }}">
                                     <div class="btn-group">
-                                        <form action="{{ route('menu.delete', ['id' => $item->id_menu]) }}"
+                                        <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
                                             method="POST" onsubmit="return confirm('Afakah yakin ?')">
                                             @csrf
                                             @method('delete')
@@ -89,24 +89,24 @@
                                 </li>
                                 <!-- 05. Update Data -->
                                 <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
-                                    <form action="{{ route('menu.update', ['id' => $item->id_menu]) }}" method="POST">
+                                    <form action="{{ route('menu.update', ['id' => $item->id]) }}" method="POST">
                                         @csrf
                                         @method('put')
                                         <div>
                                             <div>Nama</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="nama"
-                                                    value={{ $item->Nama_menu }}>
+                                                    value="{{ $item->Nama_menu }}">
                                             </div>
                                             <div>harga</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="harga"
-                                                    value={{ $item->harga }}>
+                                                    value="{{ $item->harga }}">
                                             </div>
                                             <div>Deskripsi</div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="deskripsi"
-                                                    value={{ $item->deskripsi }}>
+                                                    value="{{ $item->deskripsi }}">
                                             </div>
                                         </div>
                                         <button class="btn btn-outline-primary" type="submit">Update</button>
@@ -114,8 +114,6 @@
                                 </li>
                             @endforeach
                         </ul>
-
-
                     </div>
                 </div>
             </div>
