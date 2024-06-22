@@ -1,3 +1,4 @@
+user()
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-weight-bold h5 text-dark leading-tight">
@@ -27,14 +28,14 @@
                             </div>
                         @endif
                         <!-- 02. Form input data -->
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="task" id="todo-input"
-                                placeholder="Tambah task baru" required>
-                            <a class="btn btn-primary" type="submit" data-bs-toggle="collapse"
-                                href="#collapse-2" aria-expanded="false">
-                                Tambah
-                            </a>
-                        </div>
+                        @if (Auth::user()->usertype == 'admin')
+                         <div class="input-group mb-3">
+                             <a class="btn btn-primary" type="submit" data-bs-toggle="collapse"
+                                 href="#collapse-2" aria-expanded="false">
+                                 Tambah
+                             </a>
+                         </div>
+                        @endif
                     </div>
                 </div>
                 <li class="list-group-item collapse" id="collapse-2">
@@ -73,17 +74,19 @@
                                     <span class="task-text">{{ $item->Nama_menu }}</span>
                                     <input type="text" class="form-control edit-input" style="display: none;"
                                         value="{{ $item->Nama_menu }}">
-                                    <div class="btn-group">
-                                        <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
-                                            method="POST" onsubmit="return confirm('Afakah yakin ?')">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-danger btn-sm delete-btn">Delete</button>
-                                        </form>
-                                        <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
-                                            data-bs-target="#collapse-{{ $loop->index }}"
-                                            aria-expanded="false">Edit</button>
-                                    </div>
+                                        @if (Auth::user()->usertype == 'admin')                                        
+                                        <div class="btn-group">
+                                            <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
+                                                method="POST" onsubmit="return confirm('Afakah yakin ?')">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                            </form>
+                                            <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-{{ $loop->index }}"
+                                                aria-expanded="false">Edit</button>
+                                        </div>                                            
+                                    @endif
                                 </li>
                                 <!-- 05. Update Data -->
                                 <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
