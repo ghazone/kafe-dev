@@ -11,7 +11,7 @@ class PesananController extends Controller
      */
     public function index()
     {
-        return view("todo.Upesanan");
+        return view("admin.product.pesanan");
     }
 
     /**
