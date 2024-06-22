@@ -6,12 +6,6 @@
                     {{ __('Dashboard') }}
                 </h2>
             </a>
-            <a href="{{ route('menu') }}" class="ml-4 no-underline text-gray-800 hover:text-gray-600"
-                style="text-decoration: none;">
-                <h2 class="font-semibold text-xl leading-tight">
-                    {{ __('Menu') }}
-                </h2>
-            </a>
         </div>
     </x-slot>
 

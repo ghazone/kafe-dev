@@ -1,70 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-light">
-    <!-- 00. Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid col-md-7">
-            <div class="navbar-brand">Kafe</div>
-            
-            <div class="navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Akun Saya
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                            <li><a class="dropdown-item" href="#">Update Data</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        
-        </div>
-    </nav>
-    
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-weight-bold h5 text-dark leading-tight">
+            {{ __('Menu') }}
+        </h2>
+    </x-slot>
     <div class="container mt-4">
         <!-- 01. Content-->
         <h1 class="text-center mb-4">Pesanan</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
-             <div class="card mb-3">
-                <div class="card-body">
-                    <!-- 02. Form input data -->
-                    <form id="todo-form" action="" method="post">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="task" id="todo-input"
-                                placeholder="Tambah task baru" required>
-                            <button class="btn btn-primary" type="submit">
-                                Simpan
-                            </button>
-                        </div>
-                    </form>
-                  </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <!-- 02. Form input data -->
+                        <form id="todo-form" action="" method="post">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="task" id="todo-input"
+                                    placeholder="Tambah task baru" required>
+                                <button class="btn btn-primary" type="submit">
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <!-- 03. Searching -->
                         <form id="todo-form" action="" method="get">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="search" value="" 
+                                <input type="text" class="form-control" name="search" value=""
                                     placeholder="masukkan kata kunci">
                                 <button class="btn btn-secondary" type="submit">
                                     Cari
                                 </button>
                             </div>
                         </form>
-                        
+
                         <ul class="list-group mb-4" id="todo-list">
                             <!-- 04. Display Data -->
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -82,8 +53,7 @@
                                 <form action="" method="POST">
                                     <div>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="task"
-                                                value="Coding">
+                                            <input type="text" class="form-control" name="task" value="Coding">
                                             <button class="btn btn-outline-primary" type="button">Update</button>
                                         </div>
                                     </div>
@@ -102,8 +72,8 @@
                                 </form>
                             </li>
                         </ul>
-                        
-                        
+
+
                     </div>
                 </div>
             </div>
@@ -111,9 +81,6 @@
     </div>
 
     <!-- Bootstrap JS Bundle (popper.js included) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
-
-</html>
+</x-app-layout>
