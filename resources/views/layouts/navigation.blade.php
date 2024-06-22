@@ -15,11 +15,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-<<<<<<< HEAD
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-=======
                     <x-nav-link :href="route('admin.user')" :active="request()->routeIs('user')">
->>>>>>> f470d763b248ae4739cc7b5a1be62eac61c10823
                         {{ __('User') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.menu')" :active="request()->routeIs('menu')">
