@@ -68,10 +68,10 @@
 
                         <ul class="list-group mb-4" id="todo-list">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <h4>Nama</h4>
-                                <h4>Email</h4>
-                                <h4>Status</h4>
-                                <h4>Aksi</h4>
+                                <h6>Nama</h6>
+                                <h6>Email</h6>
+                                <h6>Status</h6>
+                                <h6>Aksi</h6>
                             </li>
                             @foreach ($data as $item)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
