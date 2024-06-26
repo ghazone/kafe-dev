@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-weight-bold h5 text-dark leading-tight">
-            {{ __('Pesanan') }}
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Admin user') }}
         </h2>
     </x-slot>
 
@@ -27,9 +27,10 @@
                             </div>
                         @endif
                         <!-- 02. Form input data -->
-                        <div class="input-group mb-3 justify-content-end">
-                        @if (Auth::check() && Auth::user()->usertype == 'admin')
-                            <button class="btn btn-primary " type="submit" data-bs-toggle="collapse"
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="task" id="todo-input"
+                                placeholder="Tambah task baru" required>
+                            <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
                                 data-bs-target="#collapse-2" aria-expanded="false">
                                 Tambah
                             </button>
@@ -37,15 +38,15 @@
                         </div>
                     </div>
                 </div>
-                <li class="list-group-item collapse" id="collapse-2">
+                <li class="list-group-item collapse" id="collapse-add">
                     <form id="todo-form" action="{{ route('menu.post') }}" method="post">
                         @csrf
                         <div>
                             <div class="input-group mb-3">
                                 <div>Nama</div>
-                                <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
+                                <input type="text" class="form-control" name="Nama_menu" value="{{ old('nama') }}">
                                 <div>Harga</div>
-                                <input type="text" class="form-control" name="harga" value="{{ old('harga') }}">
+                                <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
                                 <div>Deskripsi</div>
                                 <input type="text" class="form-control" name="deskripsi"
                                     value="{{ old('deskripsi') }}">
@@ -82,13 +83,11 @@
                                             onsubmit="return confirm('Apakah Anda yakin untuk menghapus menu ini?')">
                                             @csrf
                                             @method('DELETE')
-                                        @if (Auth::check() && Auth::user()->usertype == 'admin')
                                             <button class="btn btn-danger btn-sm delete-btn">Delete</button>
                                         </form>
                                         <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
                                             data-bs-target="#collapse-{{ $loop->index }}"
                                             aria-expanded="false">Edit</button>
-                                        @endif
                                     </div>
                                 </li>
                                 <!-- 05. Update Data -->

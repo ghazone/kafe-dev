@@ -17,7 +17,7 @@ class MenuController extends Controller
     {
         // Validasi dan simpan data
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'Nama_menu' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
         ]);
@@ -38,7 +38,11 @@ class MenuController extends Controller
         
 
         $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        // $menu->update($request->all());
+        $menu->Nama_menu = $request->input('nama');
+        $menu->harga = $request->input('harga');
+        $menu->deskripsi = $request->input('deskripsi');
+        $menu->save();
 
         return redirect()->route('menu')->with('success', 'Menu berhasil diperbarui');
     }
