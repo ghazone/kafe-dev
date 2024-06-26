@@ -15,9 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.user')" :active="request()->routeIs('user')">
+                    @if (Auth::check() && Auth::user()->usertype == 'user')
+                    <x-nav-link @click="showUserNotAdminModal"  :href="route('admin.user')" :active="request()->routeIs('user')">
                         {{ __('User') }}
                     </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('menu')" :active="request()->routeIs('menu')">
                         {{ __('Menu') }}
                     </x-nav-link>
@@ -26,6 +28,25 @@
                     </x-nav-link>
                 </div>
 
+            </div>
+
+            <div class="modal fade" id="userNotAdminModal" tabindex="-1" role="dialog" aria-labelledby="userNotAdminModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="userNotAdminModalLabel">Peringatan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Anda tidak memiliki izin untuk mengakses halaman ini.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

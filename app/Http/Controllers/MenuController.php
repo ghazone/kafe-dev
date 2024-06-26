@@ -35,6 +35,7 @@ class MenuController extends Controller
             'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
         ]);
+        
 
         $menu = Menu::findOrFail($id);
         $menu->update($request->all());

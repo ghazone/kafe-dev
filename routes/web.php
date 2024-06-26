@@ -19,11 +19,23 @@ Route::get('/dashboard', function () {
 
 // Define the home route here
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/product',
+        [ProductController::class, 'index']
+    )->name('admin.product');
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::delete('/admin/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
+    Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
+    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
+    //Route::get('/menu', [MenuController::class, 'index'])->name('admin.menu');
+    // Route::get('/pesanan', [PesananController::class, 'index'])->name('admin.pesanan');
 
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
     // Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
-    
+
 
 
 
@@ -37,20 +49,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.delete');
 
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
-
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/admin/product', [ProductController::class, 'index'])->name('admin.product');
-    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
-    Route::delete('/admin/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
-    Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
-    Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
-    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
-    //Route::get('/menu', [MenuController::class, 'index'])->name('admin.menu');
-    // Route::get('/pesanan', [PesananController::class, 'index'])->name('admin.pesanan');
+Route::middleware('auth')->group(function () {
+
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
+
+    
 });
+
+
 
 require __DIR__ . '/auth.php';
