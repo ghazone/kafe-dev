@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('pesanan', function(Blueprint $table){
 
             $table->id();
-            $table->string('task');
-            $table->boolean('is_done')->default(false);
+            $table->string('Nama_menu'); // Pastikan nama kolom sesuai
+            $table->decimal('harga', 8, 2);
+            $table->text('deskripsi');
+            $table->integer('jumlah_pesanan');
             $table->timestamps();
         });
     }

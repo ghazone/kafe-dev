@@ -29,12 +29,12 @@ user()
                         @endif
                         <!-- 02. Form input data -->
                         @if (Auth::user()->usertype == 'admin')
-                         <div class="input-group mb-3">
-                             <a class="btn btn-primary" type="submit" data-bs-toggle="collapse"
-                                 href="#collapse-2" aria-expanded="false">
-                                 Tambah
-                             </a>
-                         </div>
+                            <div class="input-group mb-3">
+                                <a class="btn btn-primary" type="submit" data-bs-toggle="collapse" href="#collapse-2"
+                                    aria-expanded="false">
+                                    Tambah
+                                </a>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -48,8 +48,7 @@ user()
                             <div>Harga</div>
                             <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
                             <div>Deskripsi</div>
-                            <input type="text" class="form-control" name="deskripsi"
-                                value="{{ old('deskripsi') }}">
+                            <input type="text" class="form-control" name="deskripsi" value="{{ old('deskripsi') }}">
                             <button class="btn btn-outline-primary" type="submit">Confirm</button>
                         </div>
                     </form>
@@ -74,7 +73,7 @@ user()
                                     <span class="task-text">{{ $item->Nama_menu }}</span>
                                     <input type="text" class="form-control edit-input" style="display: none;"
                                         value="{{ $item->Nama_menu }}">
-                                        @if (Auth::user()->usertype == 'admin')                                        
+                                    @if (Auth::user()->usertype == 'admin')
                                         <div class="btn-group">
                                             <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
                                                 method="POST" onsubmit="return confirm('Afakah yakin ?')">
@@ -85,7 +84,7 @@ user()
                                             <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
                                                 data-bs-target="#collapse-{{ $loop->index }}"
                                                 aria-expanded="false">Edit</button>
-                                        </div>                                            
+                                        </div>
                                     @endif
                                 </li>
                                 <!-- 05. Update Data -->
@@ -96,7 +95,7 @@ user()
                                         <div>
                                             <div>Nama</div>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="nama"
+                                                <input type="text" class="form-control" name="Nama_menu"
                                                     value={{ $item->Nama_menu }}>
                                             </div>
                                             <div>harga</div>

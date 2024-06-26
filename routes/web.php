@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
     // Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
-    
+
 
 
 
@@ -37,7 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.delete');
 
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
-
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {

@@ -31,13 +31,13 @@
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
                             <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
-                                data-bs-target="#collapse-2" aria-expanded="false">
+                                data-bs-target="#collapse-add" aria-expanded="false">
                                 Tambah
                             </button>
                         </div>
                     </div>
                 </div>
-                <li class="list-group-item collapse" id="collapse-2">
+                <li class="list-group-item collapse" id="collapse-add">
                     <form id="todo-form" action="{{ route('menu.post') }}" method="post">
                         @csrf
                         <div>
@@ -86,11 +86,11 @@
                                             <button class="btn btn-danger btn-sm delete-btn">Delete</button>
                                         </form>
                                         <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
-                                            data-bs-target="#collapse-{{ $loop->index }}"
+                                            data-bs-target="#collapse-edit{{ $loop->index }}"
                                             aria-expanded="false">Edit</button>
                                     </div>
                                 </li>
-                                <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
+                                <li class="list-group-item collapse" id="collapse-edit{{ $loop->index }}">
                                     <form action="{{ route('user.update', ['id' => $item->id]) }}" method="POST">
                                         @csrf
                                         @method('put')
