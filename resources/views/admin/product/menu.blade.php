@@ -27,6 +27,7 @@
                             </div>
                         @endif
                         <!-- 02. Form input data -->
+                        @if (Auth::check() && Auth::user()->usertype == 'admin')
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
@@ -83,11 +84,13 @@
                                             onsubmit="return confirm('Apakah Anda yakin untuk menghapus menu ini?')">
                                             @csrf
                                             @method('DELETE')
+                                        @if (Auth::check() && Auth::user()->usertype == 'admin')
                                             <button class="btn btn-danger btn-sm delete-btn">Delete</button>
                                         </form>
                                         <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
                                             data-bs-target="#collapse-{{ $loop->index }}"
                                             aria-expanded="false">Edit</button>
+                                        @endif
                                     </div>
                                 </li>
                                 <!-- 05. Update Data -->

@@ -15,7 +15,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (Auth::check() && Auth::user()->usertype == 'user')
+                    @if (Auth::check() && Auth::user()->usertype == 'admin')
                     <x-nav-link @click="showUserNotAdminModal"  :href="route('admin.user')" :active="request()->routeIs('user')">
                         {{ __('User') }}
                     </x-nav-link>
