@@ -32,7 +32,7 @@
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
                             <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
-                                data-bs-target="#collapse-2" aria-expanded="false">
+                                data-bs-target="#collapse-add" aria-expanded="false">
                                 Tambah
                             </button>
                         @endif
