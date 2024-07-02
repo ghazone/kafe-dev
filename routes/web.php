@@ -6,7 +6,9 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +52,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
     //Route::get('/menu', [MenuController::class, 'index'])->name('admin.menu');
     // Route::get('/pesanan', [PesananController::class, 'index'])->name('admin.pesanan');
+
 });
+
+Route::get('admin/transaksi', [TransactionController::class, 'index'])->name('admin.transaction.index');
+Route::post('/transaksi', [TransactionController::class, 'store'])->name('transaction.store');
+Route::post('transaction/add-to-cart', [TransactionController::class, 'addToCart'])->name('transaction.addToCart');
+Route::delete('/transaction/remove-from-cart', [TransactionController::class, 'removeFromCart'])->name('transaction.removeFromCart');
+Route::get('transaction/cart', [TransactionController::class, 'showCart'])->name('admin.transaction.cart');
 
 require __DIR__ . '/auth.php';
