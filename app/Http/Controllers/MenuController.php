@@ -29,6 +29,13 @@ class MenuController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validasi dan update data
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga' => 'required|numeric',
+            'deskripsi' => 'nullable|string',
+        ]);
+        
 
         $menu = Menu::findOrFail($id);
         // $menu->update($request->all());

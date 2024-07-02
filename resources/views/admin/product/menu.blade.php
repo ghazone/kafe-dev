@@ -27,6 +27,7 @@
                             </div>
                         @endif
                         <!-- 02. Form input data -->
+                        @if (Auth::check() && Auth::user()->usertype == 'admin')
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
@@ -34,6 +35,7 @@
                                 data-bs-target="#collapse-add" aria-expanded="false">
                                 Tambah
                             </button>
+                        @endif
                         </div>
                     </div>
                 </div>
@@ -67,71 +69,57 @@
                             </div>
                         </form>
 
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Harga</th>  
-                                    <th>Deskripsi</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($menus as $item)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <td>{{ $item->Nama_menu }}</td>
-                                        <td>{{ $item->harga }}</td>
-                                        <td>{{ $item->deskripsi }}</td>
-                                        <td class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
-                                                    method="POST"
-                                                    onsubmit="return confirm('Apakah Anda yakin untuk menghapus menu ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
-                                                </form>
-                                                <button class="btn btn-primary btn-sm edit-btn"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-edit{{ $loop->index }}"
-                                                    aria-expanded="false">Edit</button>
+                        <ul class="list-group mb-4" id="todo-list">
+                            @foreach ($menus as $item)
+                                <!-- 04. Display Data -->
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>Nama:</strong> {{ $item->Nama_menu }}<br>
+                                        <strong>Harga:</strong> {{ $item->harga }}<br>
+                                        <strong>Deskripsi:</strong> {{ $item->deskripsi }}
+                                    </div>
+                                    <div class="btn-group">
+                                        <form action="{{ route('menu.delete', ['id' => $item->id]) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Apakah Anda yakin untuk menghapus menu ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                        @if (Auth::check() && Auth::user()->usertype == 'admin')
+                                            <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                        </form>
+                                        <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse-{{ $loop->index }}"
+                                            aria-expanded="false">Edit</button>
+                                        @endif
+                                    </div>
+                                </li>
+                                <!-- 05. Update Data -->
+                                <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
+                                    <form action="{{ route('menu.update', ['id' => $item->id]) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div>
+                                            <div>Nama</div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="nama"
+                                                    value="{{ $item->Nama_menu }}">
                                             </div>
-                                        </td>
-                                    </li>
-                                    <tr class="collapse" id="collapse-edit{{ $loop->index }}">
-                                        <td colspan="4">
-                                            <form action="{{ route('menu.update', ['id' => $item->id]) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label">Nama</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" name="nama"
-                                                            value="{{ $item->Nama_menu }}">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label">Harga</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" name="harga"
-                                                            value="{{ $item->harga }}">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label">Deskripsi</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" name="deskripsi"
-                                                            value="{{ $item->deskripsi }}">
-                                                    </div>
-                                                </div>
-                                                <button class="btn btn-outline-primary" type="submit">Update</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            <div>Harga</div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="harga"
+                                                    value="{{ $item->harga }}">
+                                            </div>
+                                            <div>Deskripsi</div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="deskripsi"
+                                                    value="{{ $item->deskripsi }}">
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-primary" type="submit">Update</button>
+                                    </form>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
