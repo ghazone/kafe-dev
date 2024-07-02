@@ -32,32 +32,33 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
     //Route::get('/menu', [MenuController::class, 'index'])->name('admin.menu');
     // Route::get('/pesanan', [PesananController::class, 'index'])->name('admin.pesanan');
-
+    
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
     // Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
-
-
-
-
+    
+    
+    
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    
     Route::get('/todo', [TodoController::class, 'index'])->name('todo');
     Route::post('/todo', [TodoController::class, 'store'])->name('todo.post');
     Route::put('/todo/{id}', [TodoController::class, 'update'])->name('todo.update');
     Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.delete');
-
+    
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
 });
 
 Route::middleware('auth')->group(function () {
-
+    
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
 
     
 });

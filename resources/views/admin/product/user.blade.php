@@ -28,12 +28,14 @@
                         @endif
 
                         <div class="input-group mb-3">
+                            @if(Auth::check() && Auth::user()->usertype == 'admin' )
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
                             <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
                                 data-bs-target="#collapse-add" aria-expanded="false">
                                 Tambah
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -83,11 +85,13 @@
                                             onsubmit="return confirm('Are you sure, pingin di hapus ?')">
                                             @csrf
                                             @method('delete')
-                                            <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                        @if(Auth::check() && Auth::user()->usertype == 'admin')
+                                        <button class="btn btn-danger btn-sm delete-btn">Delete</button>
                                         </form>
                                         <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
                                             data-bs-target="#collapse-edit{{ $loop->index }}"
                                             aria-expanded="false">Edit</button>
+                                        @endif
                                     </div>
                                 </li>
                                 <li class="list-group-item collapse" id="collapse-edit{{ $loop->index }}">
