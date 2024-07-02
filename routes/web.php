@@ -53,7 +53,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
 });
 
-<<<<<<< HEAD
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/product', [ProductController::class, 'index'])->name('admin.product');
@@ -73,7 +72,6 @@ Route::post('/transaksi', [TransactionController::class, 'store'])->name('transa
 Route::post('transaction/add-to-cart', [TransactionController::class, 'addToCart'])->name('transaction.addToCart');
 Route::delete('/transaction/remove-from-cart', [TransactionController::class, 'removeFromCart'])->name('transaction.removeFromCart');
 Route::get('transaction/cart', [TransactionController::class, 'showCart'])->name('admin.transaction.cart');
-=======
 Route::middleware('auth')->group(function () {
     
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
@@ -87,6 +85,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
->>>>>>> 3110bd7adadc8791dd0e6c9fc1add6556c273989
 
 require __DIR__ . '/auth.php';
