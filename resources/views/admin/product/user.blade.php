@@ -28,12 +28,14 @@
                         @endif
 
                         <div class="input-group mb-3">
+                            @if(Auth::check() && Auth::user()->usertype == 'admin' )
                             <input type="text" class="form-control" name="task" id="todo-input"
                                 placeholder="Tambah task baru" required>
                             <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
                                 data-bs-target="#collapse-add" aria-expanded="false">
                                 Tambah
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -66,6 +68,7 @@
                             </div>
                         </form>
 
+<<<<<<< HEAD
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -94,6 +97,43 @@
                                                     data-bs-toggle="collapse"
                                                     data-bs-target="#collapse-edit{{ $loop->index }}"
                                                     aria-expanded="false">Edit</button>
+=======
+                        <ul class="list-group mb-4" id="todo-list">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <h6>Nama</h6>
+                                <h6>Email</h6>
+                                <h6>Status</h6>
+                                <h6>Aksi</h6>
+                            </li>
+                            @foreach ($data as $item)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="task-text">{{ $item->name }}</span>
+                                    <span class="task-text">{{ $item->email }}</span>
+                                    <span class="task-text">{{ $item->usertype }}</span>
+                                    <div class="btn-group">
+                                        <form action="{{ route('user.delete', ['id' => $item->id]) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure, pingin di hapus ?')">
+                                            @csrf
+                                            @method('delete')
+                                        @if(Auth::check() && Auth::user()->usertype == 'admin')
+                                        <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                        </form>
+                                        <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse-edit{{ $loop->index }}"
+                                            aria-expanded="false">Edit</button>
+                                        @endif
+                                    </div>
+                                </li>
+                                <li class="list-group-item collapse" id="collapse-edit{{ $loop->index }}">
+                                    <form action="{{ route('user.update', ['id' => $item->id]) }}" method="POST">
+                                        @csrf
+                                        @method('put')
+                                        <div>
+                                            <div>Nama</div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="nama"
+                                                    value="{{ $item->name }}">
+>>>>>>> 084d27401fd2442fe0d172296576554357f44a5d
                                             </div>
                                         </td>
                                     </tr>
