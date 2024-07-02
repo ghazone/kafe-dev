@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use App\Models\Pesanan;
+use App\Models\Transaction;
+use GuzzleHttp\Promise\Create;
 
 class TransactionController extends Controller
 {
@@ -17,7 +20,7 @@ class TransactionController extends Controller
     {
 
         $cart = session()->get('cart', []);
-            // dd($cart);
+        // dd($cart);
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] = $request->quantity;
         } else {
@@ -55,10 +58,22 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-        // Handle the transaction storage logic here
-        // ...
+        // Ambil data dari session 'cart'
+        $cart = session()->get('cart', []);
 
+        // Iterasi melalui setiap item di cart dan simpan ke database
+        foreach ($cart as $id => $item) {
+            Pesanan::create([
+                'nama_menu' => $item['name'],
+                'jumlah_pesanan' => $item['quantity'],
+                'harga' => $item['price'],
+            ]);
+        }
+
+        // Kosongkan keranjang setelah transaksi disimpan
         session()->forget('cart');
+
+        // Redirect dengan pesan sukses
         return redirect()->route('admin.transaction.cart')->with('success', 'Transaction completed successfully!');
     }
 }

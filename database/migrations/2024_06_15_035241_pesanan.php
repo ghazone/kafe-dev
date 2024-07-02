@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('Nama_menu'); // Pastikan nama kolom sesuai
             $table->decimal('harga', 8, 2);
-            $table->text('deskripsi');
+            $table->text('deskripsi')->nullable();
             $table->integer('jumlah_pesanan');
             $table->timestamps();
         });

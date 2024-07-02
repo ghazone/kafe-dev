@@ -66,56 +66,66 @@
                             </div>
                         </form>
 
-                        <ul class="list-group mb-4" id="todo-list">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <h6>Nama</h6>
-                                <h6>Email</h6>
-                                <h6>Status</h6>
-                                <h6>Aksi</h6>
-                            </li>
-                            @foreach ($data as $item)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span class="task-text">{{ $item->name }}</span>
-                                    <span class="task-text">{{ $item->email }}</span>
-                                    <span class="task-text">{{ $item->usertype }}</span>
-                                    <div class="btn-group">
-                                        <form action="{{ route('user.delete', ['id' => $item->id]) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure, pingin di hapus ?')">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-danger btn-sm delete-btn">Delete</button>
-                                        </form>
-                                        <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="collapse"
-                                            data-bs-target="#collapse-edit{{ $loop->index }}"
-                                            aria-expanded="false">Edit</button>
-                                    </div>
-                                </li>
-                                <li class="list-group-item collapse" id="collapse-edit{{ $loop->index }}">
-                                    <form action="{{ route('user.update', ['id' => $item->id]) }}" method="POST">
-                                        @csrf
-                                        @method('put')
-                                        <div>
-                                            <div>Nama</div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="nama"
-                                                    value="{{ $item->name }}">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->usertype }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <form action="{{ route('user.delete', ['id' => $item->id]) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this user?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                                </form>
+                                                <button class="btn btn-primary btn-sm edit-btn"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#collapse-edit{{ $loop->index }}"
+                                                    aria-expanded="false">Edit</button>
                                             </div>
-                                            <div>Email</div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="harga"
-                                                    value="{{ $item->email }}">
-                                            </div>
-                                            <div>Status</div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="deskripsi"
-                                                    value="{{ $item->usertype }}">
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-outline-primary" type="submit">Update</button>
-                                    </form>
-                                </li>
-                            @endforeach
-                        </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="collapse-edit{{ $loop->index }}">
+                                        <td colspan="4">
+                                            <form action="{{ route('user.update', ['id' => $item->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="form-group">
+                                                    <label for="nama">Nama</label>
+                                                    <input type="text" class="form-control" id="nama"
+                                                        name="nama" value="{{ $item->name }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" class="form-control" id="email"
+                                                        name="email" value="{{ $item->email }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <input type="text" class="form-control" id="status"
+                                                        name="status" value="{{ $item->usertype }}">
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-primary">Update</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

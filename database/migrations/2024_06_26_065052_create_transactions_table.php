@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_menu');
+            $table->string('pesanan');
             $table->integer('jumlah_pesanan');
             $table->decimal('total_harga', 10, 2);
             $table->string('payment_method');
