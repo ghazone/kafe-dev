@@ -34,10 +34,9 @@
                             </div>
                         @endif
 
-                        <form id="todo-form" action="" method="get">
+                        <form id="todo-form" action="{{ route('admin.transaction.index')}}" method="get">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="search" value=""
-                                    placeholder="masukkan kata kunci">
+                                <input type="text" class="form-control mr-2" name="term" placeholder="Search projects" id="term">
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
