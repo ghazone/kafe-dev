@@ -17,13 +17,14 @@
                             </div>
                         @endif
 
-                        <div style="margin-bottom: 20px;">
-                            <table class="table table-striped table-hover">
+                        <div class="container mt-5">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Nama Menu</th>
                                         <th>Jumlah Pesanan</th>
                                         <th>Harga</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,6 +36,16 @@
                                             <td>{{ $details['name'] }}</td>
                                             <td>{{ $details['quantity'] }}</td>
                                             <td>{{ $details['price'] * $details['quantity'] }}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-transparent"
+                                                    onclick="updateCart('{{ $id }}', 'remove')"><i
+                                                        class="bi bi-dash-square"
+                                                        style="font-size: 1.2rem;"></i></button>
+                                                <button class="btn btn-sm btn-transparent"
+                                                    onclick="updateCart('{{ $id }}', 'add')"><i
+                                                        class="bi bi-plus-square"
+                                                        style="font-size: 1.2rem;"></i></button>
+                                            </td>
                                         </tr>
                                         @php
                                             $totalHarga += $details['price'] * $details['quantity'];
@@ -42,28 +53,25 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <tr>
-                                <td colspan="2">
-                                    <strong style="font-size: 20px">Total harga :</strong> <span
-                                        style="margin-left: 10px; font-weight:bold;">{{ $totalHarga }}</span>
-                                </td>
-                            </tr>
-
+                            <div>
+                                Total Harga: {{ $totalHarga }}
+                            </div>
                         </div>
-
-                        <div class="mt-4">
+                        <div class="mt-4">                          
                             <form action="{{ route('transaction.store') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="total" value="{{ $totalHarga }}">
                                 <label for="payment-method" class="form-label">Pilih Pembayaran</label>
                                 <select class="form-select" id="payment-method" name="payment_method">
                                     <option value="cash">Tunai</option>
                                     <option value="credit_card">Kartu Kredit</option>
                                 </select>
                                 <div class="d-flex justify-content-between mt-3">
-                                    <a href="{{ route('admin.transaction.index') }}" class="btn btn-secondary">Kembali ke pesanan</a>
+                                    <a href="{{ route('admin.transaction.index') }}" class="btn btn-secondary">Kembali
+                                        ke pesanan</a>
                                     <button class="btn btn-primary" type="submit">Pesan Sekarang</button>
                                 </div>
-                            </form>                                                      
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -72,4 +80,21 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        function updateCart(productId, action) {
+            $.ajax({
+                url: '{{ route('cart.update') }}',
+                method: 'post',
+                data: {
+                    productId: productId,
+                    action: action,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    location.reload(); // reload halaman setelah pembaruan
+                }
+            });
+        }
+    </script>
 </x-app-layout>

@@ -68,36 +68,6 @@
                             </div>
                         </form>
 
-<<<<<<< HEAD
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $item)
-                                    <tr>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->email }}</td>
-                                        <td>{{ $item->usertype }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <form action="{{ route('user.delete', ['id' => $item->id]) }}"
-                                                    method="POST"
-                                                    onsubmit="return confirm('Are you sure you want to delete this user?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
-                                                </form>
-                                                <button class="btn btn-primary btn-sm edit-btn"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-edit{{ $loop->index }}"
-                                                    aria-expanded="false">Edit</button>
-=======
                         <ul class="list-group mb-4" id="todo-list">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <h6>Nama</h6>
@@ -133,7 +103,6 @@
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="nama"
                                                     value="{{ $item->name }}">
->>>>>>> 084d27401fd2442fe0d172296576554357f44a5d
                                             </div>
                                         </td>
                                     </tr>

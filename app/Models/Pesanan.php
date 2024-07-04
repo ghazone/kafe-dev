@@ -11,6 +11,16 @@ class Pesanan extends Model
 
     protected $table = 'pesanan';
     protected $fillable = [
-        'nama_menu', 'harga', 'jumlah_pesanan',
+        'id_menu', 'id_transaksi', 'jumlah_pesanan',
     ];
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
 }

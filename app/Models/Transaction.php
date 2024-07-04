@@ -10,8 +10,18 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_menu', 'jumlah_pesanan', 'total_harga', 'payment_method',
+        'user_id', 'total_harga', 'payment_method',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class);
+    }
 
     protected $table = 'transactions'; // Pastikan ini mengarah ke tabel yang benar
 }

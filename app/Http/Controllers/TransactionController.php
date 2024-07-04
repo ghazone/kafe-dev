@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -25,6 +26,7 @@ class TransactionController extends Controller
             $cart[$request->id]['quantity'] = $request->quantity;
         } else {
             $cart[$request->id] = [
+                "id" => $request->id,
                 "name" => $request->name,
                 "price" => $request->price,
                 "quantity" => $request->quantity
@@ -58,15 +60,36 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
+        $request->validate([
+            'total' => 'required|numeric',
+            'payment_method' => 'required|string',
+        ]);
+
         // Ambil data dari session 'cart'
         $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()->route('admin.transaction.cart')->with('error', 'Cart is empty');
+        }
+
+        // Debugging
+        // dd($request->all());
+
+        $transaction = Transaction::create([
+            'user_id' => Auth::id(),
+            'total_harga' => $request->input('total'),
+            'payment_method' => $request->input('payment_method'),
+        ]);
+
+        $transactionId = $transaction->id;
 
         // Iterasi melalui setiap item di cart dan simpan ke database
         foreach ($cart as $id => $item) {
             Pesanan::create([
-                'nama_menu' => $item['name'],
+                'id_menu' => $item['id'],
                 'jumlah_pesanan' => $item['quantity'],
-                'harga' => $item['price'],
+                'id_transaksi' => $transactionId,
             ]);
         }
 

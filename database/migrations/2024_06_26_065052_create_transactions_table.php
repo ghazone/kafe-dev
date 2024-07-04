@@ -15,8 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('pesanan');
-            $table->integer('jumlah_pesanan');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->decimal('total_harga', 10, 2);
             $table->string('payment_method');
             $table->timestamps();
