@@ -104,22 +104,37 @@
                                                 <input type="text" class="form-control" name="nama"
                                                     value="{{ $item->name }}">
                                             </div>
-                                            <div>Email</div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="harga"
-                                                    value="{{ $item->email }}">
-                                            </div>
-                                            <div>Status</div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="deskripsi"
-                                                    value="{{ $item->usertype }}">
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-outline-primary" type="submit">Update</button>
-                                    </form>
-                                </li>
-                            @endforeach
-                        </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="collapse-edit{{ $loop->index }}">
+                                        <td colspan="4">
+                                            <form action="{{ route('user.update', ['id' => $item->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="form-group">
+                                                    <label for="nama">Nama</label>
+                                                    <input type="text" class="form-control" id="nama"
+                                                        name="nama" value="{{ $item->name }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" class="form-control" id="email"
+                                                        name="email" value="{{ $item->email }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <input type="text" class="form-control" id="status"
+                                                        name="status" value="{{ $item->usertype }}">
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-primary">Update</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

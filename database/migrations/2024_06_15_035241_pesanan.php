@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('pesanan', function(Blueprint $table){
 
             $table->id();
-            $table->string('Nama_menu'); // Pastikan nama kolom sesuai
-            $table->decimal('harga', 8, 2);
-            $table->text('deskripsi');
+            $table->foreignId('id_menu')->constrained('menu')->onDelete('cascade');
+            
             $table->integer('jumlah_pesanan');
+            // $table->decimal('subtotal', 8, 2);
             $table->timestamps();
         });
     }
@@ -27,6 +27,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('pesanan', function (Blueprint $table) {
+            $table->dropForeign('pesanan_id_menu_foreign');
+        });
         Schema::dropIfExists('pesanan');
     }
 };
