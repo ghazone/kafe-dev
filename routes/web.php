@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PesananController;
@@ -77,6 +78,7 @@ Route::get('transaction/cart', [TransactionController::class, 'showCart'])->name
 Route::middleware('auth')->group(function () {
 
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
