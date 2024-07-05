@@ -4,43 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
-<<<<<<< HEAD
 use App\Models\Pesanan;
 use App\Models\Transaction;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Auth;
-=======
-use App\Models\Transaction;
->>>>>>> 3bdad5e16c5ebd2ac7d461a2baa4249a21db6f9f
 
 class TransactionController extends Controller
 {
-    // app/Http/Controllers/TransactionController.php
-
-    public function index(Request $request)
+    public function index()
     {
-        $menus = Menu::all(); // Inisialisasi $menus di luar blok kondisional
-
-        if ($request->has('search')) {
-            $searchTerm = $request->input('term');
-            $data = Menu::where('Nama_menu', 'like',
-                '%' . $searchTerm . '%'
-            )->get();
-        } else {
-            echo "tidak ada"; // Jika tidak ada pencarian, ambil semua data
-        }
-
+        $menus = Menu::all();
         return view('admin.transaction.index', compact('menus'));
     }
 
-
     public function addToCart(Request $request)
     {
-
         $cart = session()->get('cart', []);
-        // dd($cart);
+
         if (isset($cart[$request->id])) {
-            $cart[$request->id]['quantity'] = $request->quantity;
+            $cart[$request->id]['quantity'] += $request->quantity;
         } else {
             $cart[$request->id] = [
                 "id" => $request->id,
@@ -51,6 +32,7 @@ class TransactionController extends Controller
         }
 
         session()->put('cart', $cart);
+
         return response()->json(['success' => 'Item added to cart successfully!']);
     }
 
@@ -72,48 +54,63 @@ class TransactionController extends Controller
     public function showCart()
     {
         $cart = session()->get('cart', []);
+
         return view('admin.transaction.cart', compact('cart'));
     }
 
     public function store(Request $request)
     {
-        // Validasi input
+        // Validasi data sebelum menyimpan transaksi
         $request->validate([
-            'total' => 'required|numeric',
+            'total' => 'required|numeric|min:0',
             'payment_method' => 'required|string',
         ]);
 
         // Ambil data dari session 'cart'
         $cart = session()->get('cart', []);
 
+        // Debugging data request
         if (empty($cart)) {
-            return redirect()->route('admin.transaction.cart')->with('error', 'Cart is empty');
+            return redirect()->back()->with('error', 'Keranjang belanja kosong.');
         }
 
-        // Debugging
-        // dd($request->all());
+        try {
+            // Hitung total harga dari item di keranjang
+            $totalHarga = array_reduce($cart, function ($sum, $item) {
+                return $sum + ($item['price'] * $item['quantity']);
+            }, 0);
 
-        $transaction = Transaction::create([
-            'user_id' => Auth::id(),
-            'total_harga' => $request->input('total'),
-            'payment_method' => $request->input('payment_method'),
-        ]);
-
-        $transactionId = $transaction->id;
-
-        // Iterasi melalui setiap item di cart dan simpan ke database
-        foreach ($cart as $id => $item) {
-            Pesanan::create([
-                'id_menu' => $item['id'],
-                'jumlah_pesanan' => $item['quantity'],
-                'id_transaksi' => $transactionId,
+            // Simpan transaksi ke dalam database
+            $transaction = Transaction::create([
+                'user_id' => Auth::id(),
+                'total_harga' => $totalHarga,
+                'payment_method' => $request->input('payment_method'),
             ]);
+
+            $transactionId = $transaction->id;
+
+            // Iterasi melalui setiap item di cart dan simpan pesanan ke database
+            foreach ($cart as $id => $item) {
+                Pesanan::create([
+                    'id_menu' => $item['id'],
+                    'jumlah_pesanan' => $item['quantity'],
+                    'id_transaksi' => $transactionId,
+                ]);
+            }
+
+            // Kosongkan keranjang setelah transaksi selesai
+            session()->forget('cart');
+
+            // Redirect ke halaman konfirmasi
+            return redirect()->route('transaction.confirmation')->with('success', 'Transaction completed successfully!');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, tangani dengan memberikan pesan error
+            return redirect()->back()->with('error', 'Failed to complete transaction: ' . $e->getMessage());
         }
+    }
 
-        // Kosongkan keranjang setelah transaksi disimpan
-        session()->forget('cart');
-
-        // Redirect dengan pesan sukses
-        return redirect()->route('admin.transaction.cart')->with('success', 'Transaction completed successfully!');
+    public function confirmation()
+    {
+        return view('admin.transaction.confirmation');
     }
 }
