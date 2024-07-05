@@ -16,7 +16,6 @@ class Transaction extends Model
         'user_id', 'total_harga', 'payment_method',
     ];
 
-<<<<<<< HEAD
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -25,7 +24,8 @@ class Transaction extends Model
     public function pesanan()
     {
         return $this->hasMany(Pesanan::class);
-=======
+    }
+
     public function toSearchableArray()
     {
         return [
@@ -33,7 +33,6 @@ class Transaction extends Model
             'jumlah_pesanan' => $this->jumlah_pesanan,
             'total_harga' => $this->total_harga,
         ];
->>>>>>> 3bdad5e16c5ebd2ac7d461a2baa4249a21db6f9f
     }
 
     protected $table = 'transactions'; // Pastikan ini mengarah ke tabel yang benar

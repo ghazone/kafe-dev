@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
-<<<<<<< HEAD
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Auth;
-=======
-use App\Models\Transaction;
->>>>>>> 3bdad5e16c5ebd2ac7d461a2baa4249a21db6f9f
+
 
 class TransactionController extends Controller
 {
@@ -21,16 +18,14 @@ class TransactionController extends Controller
     {
         $menus = Menu::all(); // Inisialisasi $menus di luar blok kondisional
 
-        if ($request->has('search')) {
+        if ($request->has('term')) {
             $searchTerm = $request->input('term');
-            $data = Menu::where('Nama_menu', 'like',
-                '%' . $searchTerm . '%'
-            )->get();
+            $menus = Menu::where('Nama_menu', 'like', '%' . $searchTerm . '%')->get();
         } else {
-            echo "tidak ada"; // Jika tidak ada pencarian, ambil semua data
+            $menus = Menu::all(); // Jika tidak ada pencarian, ambil semua data
         }
-
-        return view('admin.transaction.index', compact('menus'));
+            
+            return view('admin.transaction.index', compact('menus'));
     }
 
 
@@ -38,7 +33,7 @@ class TransactionController extends Controller
     {
 
         $cart = session()->get('cart', []);
-        // dd($cart);
+         dd($cart);
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] = $request->quantity;
         } else {
