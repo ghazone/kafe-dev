@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Pesanan;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -13,56 +14,31 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $menus = Transaction::all();
-
-        return view('admin.product.history', compact('menus'));
+        $transactions = Transaction::all(); // Ambil semua transaksi untuk ditampilkan di history
+        return view('admin.product.history', compact('transactions'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get details of a specific transaction.
      */
-    public function create()
+    public function showTransactionDetails($id)
     {
-        //
-    }
+        $transaction = Transaction::with(['pesanan.menu'])->find($id);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if (!$transaction) {
+            return response()->json(['error' => 'Transaksi tidak ditemukan.'], 404);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json([
+            'menu' => $transaction->pesanan->map(function ($pesanan) {
+                return [
+                    'nama_menu' => $pesanan->menu->Nama_menu,
+                    'id_menu' => $pesanan->id_menu,
+                    'jumlah_pesanan' => $pesanan->jumlah_pesanan,
+                ];
+            }),
+            'total_harga' => $transaction->total_harga,
+            'payment_method' => $transaction->payment_method,
+        ]);
     }
 }

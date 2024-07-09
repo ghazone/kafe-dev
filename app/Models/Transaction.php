@@ -21,16 +21,7 @@ class Transaction extends Model
 
     public function pesanan()
     {
-        return $this->hasMany(Pesanan::class);
-    }
-
-    public function toSearchableArray()
-    {
-        return [
-            'nama_menu' => $this->nama_menu,
-            'jumlah_pesanan' => $this->jumlah_pesanan,
-            'total_harga' => $this->total_harga,
-        ];
+        return $this->hasMany(Pesanan::class, 'id_transaksi');
     }
 
     protected $table = 'transactions'; // Pastikan ini mengarah ke tabel yang benar

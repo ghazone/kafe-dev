@@ -7,15 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
-        Schema::create('pesanan', function(Blueprint $table){
-
+        Schema::create('pesanan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_menu')->constrained('menu')->onDelete('cascade');
-            
             $table->integer('jumlah_pesanan');
             // $table->decimal('subtotal', 8, 2);
             $table->timestamps();
@@ -23,13 +21,13 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Rollback migrasi.
      */
     public function down(): void
     {
-        Schema::table('pesanan', function (Blueprint $table) {
-            $table->dropForeign('pesanan_id_menu_foreign');
-        });
+        // Schema::table('pesanan', function (Blueprint $table) {
+        //     $table->dropForeign(['id_menu']); // Hapus foreign key constraint berdasarkan kolom
+        // });
         Schema::dropIfExists('pesanan');
     }
 };

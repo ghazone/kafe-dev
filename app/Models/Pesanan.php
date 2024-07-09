@@ -11,16 +11,18 @@ class Pesanan extends Model
 
     protected $table = 'pesanan';
     protected $fillable = [
-        'id_menu', 'id_transaksi', 'jumlah_pesanan',
+        'id_menu',
+        'id_transaksi',
+        'jumlah_pesanan',
     ];
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Menu::class, 'id_menu');
     }
 
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class);
+        return $this->belongsTo(Transaction::class, 'id_transaksi');
     }
 }

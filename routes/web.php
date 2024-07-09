@@ -75,9 +75,13 @@ Route::post('/transaksi', [TransactionController::class, 'store'])->name('transa
 Route::post('transaction/add-to-cart', [TransactionController::class, 'addToCart'])->name('transaction.addToCart');
 Route::delete('/transaction/remove-from-cart', [TransactionController::class, 'removeFromCart'])->name('transaction.removeFromCart');
 Route::get('transaction/cart', [TransactionController::class, 'showCart'])->name('admin.transaction.cart');
+
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history');
+    Route::get('/history/{id}/details', [HistoryController::class, 'showTransactionDetails'])->name('history.getTransactionDetails');
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
