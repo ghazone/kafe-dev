@@ -73,15 +73,12 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-<<<<<<< HEAD
-=======
                         <x-dropdown-link :href="route('history')">
                             {{ __('history') }}
                         </x-dropdown-link>
 
                     
                     
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

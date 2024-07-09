@@ -19,6 +19,6 @@ class Menu extends Model
 
     public function pesanan()
     {
-        return $this->hasMany(Pesanan::class);
+        return $this->hasMany(Pesanan::class, 'id_menu');
     }
 }

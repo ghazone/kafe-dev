@@ -42,8 +42,8 @@
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <form id="todo-form" action="{{ route('menu.post') }}" method="post" class="collapse"
-                            id="collapse-add">
+                        <li class="list-group-item collapse" id="collapse-add">
+                        <form id="todo-form" action="{{ route('menu.post') }}" method="post" class="">
                             @csrf
                             <div class="input-group mb-3">
                                 <div>Nama</div>
@@ -57,6 +57,7 @@
                                 <button class="btn btn-outline-primary" type="submit">Confirm</button>
                             </div>
                         </form>
+                        </li>
                     </div>
                 </div>
 

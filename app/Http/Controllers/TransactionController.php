@@ -7,20 +7,13 @@ use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-=======
 
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
 
 class TransactionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-<<<<<<< HEAD
         $menus = Menu::all();
-        return view('admin.transaction.index', compact('menus'));
-=======
-        $menus = Menu::all(); // Inisialisasi $menus di luar blok kondisional
 
         if ($request->has('term')) {
             $searchTerm = $request->input('term');
@@ -28,21 +21,16 @@ class TransactionController extends Controller
         } else {
             $menus = Menu::all(); // Jika tidak ada pencarian, ambil semua data
         }
-            
-            return view('admin.transaction.index', compact('menus'));
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
+
+        return view('admin.transaction.index', compact('menus'));
     }
 
     public function addToCart(Request $request)
     {
         $cart = session()->get('cart', []);
-<<<<<<< HEAD
-
-=======
-         dd($cart);
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
         if (isset($cart[$request->id])) {
-            $cart[$request->id]['quantity'] += $request->quantity;
+            $cart[$request->id]['quantity'] = $request->quantity;
+            
         } else {
             $cart[$request->id] = [
                 "id" => $request->id,
@@ -76,6 +64,8 @@ class TransactionController extends Controller
     {
         $cart = session()->get('cart', []);
 
+        
+
         return view('admin.transaction.cart', compact('cart'));
     }
 
@@ -88,8 +78,9 @@ class TransactionController extends Controller
         ]);
 
         // Ambil data dari session 'cart'
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart',[]);
 
+        
         // Debugging data request
         if (empty($cart)) {
             return redirect()->back()->with('error', 'Keranjang belanja kosong.');
@@ -118,20 +109,16 @@ class TransactionController extends Controller
                     'id_transaksi' => $transactionId,
                 ]);
             }
-
             // Kosongkan keranjang setelah transaksi selesai
             session()->forget('cart');
-
+            
+            
             // Redirect ke halaman konfirmasi
-            return redirect()->route('transaction.confirmation')->with('success', 'Transaction completed successfully!');
+            return
+            redirect()->back()->with('success', 'Transaksi berhasil diselesaikan!');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, tangani dengan memberikan pesan error
-            return redirect()->back()->with('error', 'Failed to complete transaction: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menyelesaikan transaksi: ' . $e->getMessage());
         }
-    }
-
-    public function confirmation()
-    {
-        return view('admin.transaction.confirmation');
     }
 }
