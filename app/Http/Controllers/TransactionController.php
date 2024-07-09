@@ -7,42 +7,21 @@ use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
 
 class TransactionController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
         $menus = Menu::all();
         return view('admin.transaction.index', compact('menus'));
-=======
-        $menus = Menu::all(); // Inisialisasi $menus di luar blok kondisional
-
-        if ($request->has('term')) {
-            $searchTerm = $request->input('term');
-            $menus = Menu::where('Nama_menu', 'like', '%' . $searchTerm . '%')->get();
-        } else {
-            $menus = Menu::all(); // Jika tidak ada pencarian, ambil semua data
-        }
-            
-            return view('admin.transaction.index', compact('menus'));
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
     }
 
     public function addToCart(Request $request)
     {
         $cart = session()->get('cart', []);
-<<<<<<< HEAD
 
-=======
-         dd($cart);
->>>>>>> 6ff38f29de466a23fed4bea30975c5723d3bf0fc
         if (isset($cart[$request->id])) {
-            $cart[$request->id]['quantity'] += $request->quantity;
+            $cart[$request->id]['quantity'] = $request->quantity;
         } else {
             $cart[$request->id] = [
                 "id" => $request->id,
