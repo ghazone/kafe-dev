@@ -76,12 +76,6 @@
                         <x-dropdown-link :href="route('history')">
                             {{ __('history') }}
                         </x-dropdown-link>
-<<<<<<< HEAD
-=======
-
-                    
-                    
->>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -117,6 +111,21 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('admin.user')" :active="request()->routeIs('User')">
+                {{ __('User') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('menu')" :active="request()->routeIs('menu')">
+                {{ __('Menu') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('admin.transaction.index')" :active="request()->routeIs('pesanan')">
+                {{ __('Pesanan') }}
             </x-responsive-nav-link>
         </div>
 

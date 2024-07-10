@@ -7,42 +7,29 @@ use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-=======
-
->>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
 
 class TransactionController extends Controller
 {
     public function index(Request $request)
     {
         $menus = Menu::all();
-<<<<<<< HEAD
-=======
+        $transactions = Transaction::all(); // Inisialisasi $transactions
 
-        if ($request->has('term')) {
-            $searchTerm = $request->input('term');
-            $menus = Menu::where('Nama_menu', 'like', '%' . $searchTerm . '%')->get();
-        } else {
-            $menus = Menu::all(); // Jika tidak ada pencarian, ambil semua data
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $transactions = Transaction::where('user_id', 'like', '%' . $searchTerm . '%')
+                ->orWhere('payment_method', 'like', '%' . $searchTerm . '%')
+                ->get();
         }
 
->>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
-        return view('admin.transaction.index', compact('menus'));
+        return view('admin.transaction.index', compact('menus', 'transactions'));
     }
 
     public function addToCart(Request $request)
     {
         $cart = session()->get('cart', []);
-<<<<<<< HEAD
-
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] = $request->quantity;
-=======
-        if (isset($cart[$request->id])) {
-            $cart[$request->id]['quantity'] = $request->quantity;
-            
->>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
         } else {
             $cart[$request->id] = [
                 "id" => $request->id,
@@ -53,14 +40,12 @@ class TransactionController extends Controller
         }
 
         session()->put('cart', $cart);
-
         return response()->json(['success' => 'Item added to cart successfully!']);
     }
 
     public function removeFromCart(Request $request)
     {
         $id = $request->input('id');
-
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
@@ -68,69 +53,47 @@ class TransactionController extends Controller
         }
 
         session()->put('cart', $cart);
-
         return response()->json(['message' => 'Item removed from cart', 'cart' => $cart]);
     }
 
     public function showCart()
     {
         $cart = session()->get('cart', []);
-
-        
-
         return view('admin.transaction.cart', compact('cart'));
     }
 
     public function store(Request $request)
     {
-        // Validasi data sebelum menyimpan transaksi
         $request->validate([
-            'total' => 'required|numeric|min:0',
+            'total' => 'required|numeric',
             'payment_method' => 'required|string',
         ]);
 
-        // Ambil data dari session 'cart'
-        $cart = session()->get('cart',[]);
-
-        
-        // Debugging data request
+        $cart = session()->get('cart', []);
         if (empty($cart)) {
-            return redirect()->back()->with('error', 'Keranjang belanja kosong.');
+            return redirect()->route('admin.transaction.cart')->with('error', 'Cart is empty');
         }
 
-        try {
-            // Hitung total harga dari item di keranjang
-            $totalHarga = array_reduce($cart, function ($sum, $item) {
-                return $sum + ($item['price'] * $item['quantity']);
-            }, 0);
+        $transaction = Transaction::create([
+            'user_id' => Auth::id(),
+            'total_harga' => $request->input('total'),
+            'payment_method' => $request->input('payment_method'),
+        ]);
 
-            // Simpan transaksi ke dalam database
-            $transaction = Transaction::create([
-                'user_id' => Auth::id(),
-                'total_harga' => $totalHarga,
-                'payment_method' => $request->input('payment_method'),
+        foreach ($cart as $id => $item) {
+            Pesanan::create([
+                'id_menu' => $item['id'],
+                'jumlah_pesanan' => $item['quantity'],
+                'id_transaksi' => $transaction->id,
             ]);
-
-            $transactionId = $transaction->id;
-
-            // Iterasi melalui setiap item di cart dan simpan pesanan ke database
-            foreach ($cart as $id => $item) {
-                Pesanan::create([
-                    'id_menu' => $item['id'],
-                    'jumlah_pesanan' => $item['quantity'],
-                    'id_transaksi' => $transactionId,
-                ]);
-            }
-            // Kosongkan keranjang setelah transaksi selesai
-            session()->forget('cart');
-            
-            
-            // Redirect ke halaman konfirmasi
-            return
-            redirect()->back()->with('success', 'Transaksi berhasil diselesaikan!');
-        } catch (\Exception $e) {
-            // Jika terjadi kesalahan, tangani dengan memberikan pesan error
-            return redirect()->back()->with('error', 'Gagal menyelesaikan transaksi: ' . $e->getMessage());
         }
+
+        session()->forget('cart');
+        return redirect()->route('admin.transaction.cart')->with('success', 'Pesanan Succes, pesanan anda sedang di buatkan!, Tunggu ');
+    }
+
+    public function confirmation()
+    {
+        return view('admin.transaction.confirmation');
     }
 }

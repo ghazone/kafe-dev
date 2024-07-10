@@ -34,9 +34,10 @@
                             </div>
                         @endif
 
-                        <form id="todo-form" action="{{ route('admin.transaction.index')}}" method="get">
+                        <form id="todo-form" action="{{ route('admin.transaction.index') }}" method="get">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control mr-2" name="term" placeholder="Search projects" id="term">
+                                <input type="text" class="form-control mr-2" name="term"
+                                    placeholder="Search projects" id="term">
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
@@ -77,8 +78,7 @@
                             </tbody>
                         </table>
                         <button class="btn btn-primary" type="button"
-                            onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Lihat
-                            Pesanan</button>
+                            onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,8 @@
 
                 var quantity = currentQuantity;
                 var method = quantity == 0 ? 'delete' : 'post'
-                var url = quantity == 0 ? '{{ route('transaction.removeFromCart') }}' : '{{ route('transaction.addToCart') }}';
+                var url = quantity == 0 ? '{{ route('transaction.removeFromCart') }}' :
+                    '{{ route('transaction.addToCart') }}';
                 console.log(quantity, method)
                 $.ajax({
                     url: url,
