@@ -7,13 +7,18 @@ use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
+=======
 
+>>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
 
 class TransactionController extends Controller
 {
     public function index(Request $request)
     {
         $menus = Menu::all();
+<<<<<<< HEAD
+=======
 
         if ($request->has('term')) {
             $searchTerm = $request->input('term');
@@ -22,15 +27,22 @@ class TransactionController extends Controller
             $menus = Menu::all(); // Jika tidak ada pencarian, ambil semua data
         }
 
+>>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
         return view('admin.transaction.index', compact('menus'));
     }
 
     public function addToCart(Request $request)
     {
         $cart = session()->get('cart', []);
+<<<<<<< HEAD
+
+        if (isset($cart[$request->id])) {
+            $cart[$request->id]['quantity'] = $request->quantity;
+=======
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] = $request->quantity;
             
+>>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
         } else {
             $cart[$request->id] = [
                 "id" => $request->id,
