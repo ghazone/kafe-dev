@@ -76,12 +76,6 @@
                         <x-dropdown-link :href="route('history')">
                             {{ __('history') }}
                         </x-dropdown-link>
-<<<<<<< HEAD
-=======
-
-                    
-                    
->>>>>>> b742d5d61f3661cbf8fdd590f836a2fb5093135c
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
