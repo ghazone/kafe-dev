@@ -33,17 +33,97 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <form id="search-form" action="{{ route('admin.transaction.index') }}" method="get">
-                <div class="card">
-                    <div class="card-body">
-                        <!-- 03. Searching -->
-                        <form id="search-form" action="" method="get">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="search"
-                                    placeholder="Masukkan kata kunci">
-                                <button class="btn btn-secondary" type="submit">Cari</button>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="search"
+                                            placeholder="Masukkan kata kunci">
+                                        <button class="btn btn-secondary" type="submit">Cari</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <div class="overflow-scroll">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User ID</th>
+                                    <th>Total Harga</th>
+                                    <th>Payment Method</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($transactions as $transaction)
+                                    <tr>
+                                        <td>{{ $transaction->id }}</td>
+                                        <td>{{ $transaction->user_id }}</td>
+                                        <td>{{ $transaction->total_harga }}</td>
+                                        <td>{{ $transaction->payment_method }}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal{{ $loop->index }}">Detail</button>
+                                        </td>
+                                    </tr>
+
+                                    <div class="modal fade" id="exampleModal{{ $loop->index }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Transaction Detail
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="id-{{ $loop->index }}"
+                                                            class="form-label">ID</label>
+                                                        <input type="text" class="form-control" disabled="disabled"
+                                                            id="id-{{ $loop->index }}"
+                                                            value="{{ $transaction->id }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="user_id-{{ $loop->index }}"
+                                                            class="form-label">User ID</label>
+                                                        <input type="text" class="form-control" disabled="disabled"
+                                                            id="user_id-{{ $loop->index }}"
+                                                            value="{{ $transaction->user_id }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="total_harga-{{ $loop->index }}"
+                                                            class="form-label">Total Harga</label>
+                                                        <input type="text" class="form-control" disabled="disabled"
+                                                            id="total_harga-{{ $loop->index }}"
+                                                            value="{{ $transaction->total_harga }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="payment_method-{{ $loop->index }}"
+                                                            class="form-label">Payment Method</label>
+                                                        <input type="text" class="form-control" disabled="disabled"
+                                                            id="payment_method-{{ $loop->index }}"
+                                                            value="{{ $transaction->payment_method }}">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -57,17 +137,17 @@
                             </thead>
                             <tbody>
                                 @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td>{{ $transaction->id }}</td>
-                                    <td>{{ $transaction->user_id }}</td>
-                                    <td>{{ $transaction->total_harga }}</td>
-                                    <td>{{ $transaction->payment_method }}</td>
-                                    <td>{{ $transaction->created_at->format('D/m/Y') }}</td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $transaction->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        aria-expanded="false">Detail</button>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $transaction->id }}</td>
+                                        <td>{{ $transaction->user_id }}</td>
+                                        <td>{{ $transaction->total_harga }}</td>
+                                        <td>{{ $transaction->payment_method }}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-id="{{ $transaction->id }}" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal" aria-expanded="false">Detail</button>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -78,6 +158,9 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+=======
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -94,6 +177,10 @@
                     <div class="mb-3">
                         <label for="id-menu" class="form-label">ID Menu</label>
                         <input type="text" class="form-control" id="id-menu" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jumlah-pesanan" class="form-label">Jumlah Pesanan</label>
+                        <input type="text" class="form-control" id="jumlah-pesanan" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="total-harga" class="form-label">Total Harga</label>
@@ -124,13 +211,11 @@
                     url: url,
                     method: 'GET',
                     success: function(data) {
-                        // Kosongkan field modal sebelum mengisinya
                         $('#nama-pesanan').val('');
                         $('#id-menu').val('');
                         $('#total-harga').val('');
                         $('#payment-method').val('');
 
-                        // Mengisi data modal
                         if (data.menu.length > 0) {
                             // Menggabungkan semua nama menu dan id menu
                             var namaMenu = data.menu.map(item => item.nama_menu).join(', ');

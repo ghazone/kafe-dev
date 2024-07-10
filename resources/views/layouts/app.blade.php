@@ -27,6 +27,11 @@
     <!-- Bootstrap CSS (Optional, but might be necessary for certain styles) -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}" crossorigin="use-credentials">
+
 </head>
 
 <body class="font-sans antialiased">
