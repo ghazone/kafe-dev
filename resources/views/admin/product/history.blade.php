@@ -22,7 +22,7 @@
                                 </button>
                             </div>
                         </form>
-
+                        <div class="overflow-scroll">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -30,6 +30,7 @@
                                     <th>User ID</th>
                                     <th>Total Harga</th>
                                     <th>Payment</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     <td>{{ $transaction->user_id }}</td>
                                     <td>{{ $transaction->total_harga }}</td>
                                     <td>{{ $transaction->payment_method }}</td>
+                                    <td>{{ $transaction->created_at->format('D/m/Y') }}</td>
                                     <td>
                                         <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $transaction->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                         aria-expanded="false">Detail</button>
@@ -48,6 +50,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -70,10 +73,6 @@
                     <div class="mb-3">
                         <label for="id-menu" class="form-label">ID Menu</label>
                         <input type="text" class="form-control" id="id-menu" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="jumlah-pesanan" class="form-label">Jumlah Pesanan</label>
-                        <input type="text" class="form-control" id="jumlah-pesanan" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="total-harga" class="form-label">Total Harga</label>
@@ -107,19 +106,19 @@
                         // Kosongkan field modal sebelum mengisinya
                         $('#nama-pesanan').val('');
                         $('#id-menu').val('');
-                        $('#jumlah-pesanan').val('');
                         $('#total-harga').val('');
                         $('#payment-method').val('');
 
                         // Mengisi data modal
                         if (data.menu.length > 0) {
-                            $('#nama-pesanan').val(data.menu[0].nama_menu || 'Tidak ada');
-                            $('#id-menu').val(data.menu[0].id_menu || 'Tidak ada');
-                            $('#jumlah-pesanan').val(data.menu[0].jumlah_pesanan || 'Tidak ada');
+                            // Menggabungkan semua nama menu dan id menu
+                            var namaMenu = data.menu.map(item => item.nama_menu).join(', ');
+                            var idMenu = data.menu.map(item => item.id_menu).join(', ');
+                            $('#nama-pesanan').val(namaMenu || 'Tidak ada');
+                            $('#id-menu').val(idMenu || 'Tidak ada');
                         } else {
                             $('#nama-pesanan').val('Tidak ada');
                             $('#id-menu').val('Tidak ada');
-                            $('#jumlah-pesanan').val('Tidak ada');
                         }
                         $('#total-harga').val(data.total_harga || 'Tidak ada');
                         $('#payment-method').val(data.payment_method || 'Tidak ada');

@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HistoryController extends Controller
 {
@@ -14,19 +15,27 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all(); // Ambil semua transaksi untuk ditampilkan di history
+        $auth = auth()->user()->id;
+        $transactions = Transaction::where('user_id', $auth)->get(); // Ambil semua transaksi untuk ditampilkan di history
+
+        
         return view('admin.product.history', compact('transactions'));
     }
+
 
     /**
      * Get details of a specific transaction.
      */
     public function showTransactionDetails($id)
     {
-        $transaction = Transaction::with(['pesanan.menu'])->find($id);
+        // Ambil detail transaksi hanya untuk user yang sedang login
+        $transaction = Transaction::with(['pesanan.menu'])
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
 
         if (!$transaction) {
-            return response()->json(['error' => 'Transaksi tidak ditemukan.'], 404);
+            return response()->json(['error' => 'Transaksi tidak ditemukan atau anda tidak berhak mengakses.'], 404);
         }
 
         return response()->json([
