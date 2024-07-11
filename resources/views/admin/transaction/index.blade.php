@@ -10,21 +10,27 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <li class="list-group-item collapse" id="collapse-2">
-                    <form id="todo-form" action="{{ route('transaction.addToCart') }}" method="post">
+                    <form id="todo-form" action="{{ route('transaction.addToCart') }}" method="post"
+                        onsubmit="return validateForm()">
                         @csrf
                         <div>
                             <div class="input-group mb-3">
                                 <div>Nama</div>
-                                <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
+                                <input type="text" class="form-control" name="nama" value="{{ old('nama') }}"
+                                    id="nama">
                                 <div>Harga</div>
-                                <input type="text" class="form-control" name="harga" value="{{ old('Harga') }}">
+                                <input type="text" class="form-control" name="harga" value="{{ old('harga') }}"
+                                    id="harga">
                                 <div>Deskripsi</div>
                                 <input type="text" class="form-control" name="deskripsi"
-                                    value="{{ old('deskripsi') }}">
+                                    value="{{ old('deskripsi') }}" id="deskripsi">
                                 <button class="btn btn-outline-primary" type="submit">Confirm</button>
                             </div>
                         </div>
                     </form>
+                    <div id="empty-fields-alert" class="alert alert-warning mt-3" style="display: none;">
+                        Semua field harus diisi.
+                    </div>
                 </li>
                 <div class="card">
                     <div class="card-body">
@@ -34,7 +40,7 @@
                             </div>
                         @endif
 
-                        <form id="todo-form" action="{{ route('admin.transaction.index') }}" method="get">
+                        <form id="search-form" action="{{ route('admin.transaction.index') }}" method="get">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control mr-2" name="term"
                                     placeholder="Search projects" id="term">
@@ -77,8 +83,10 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary" type="button"
-                            onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
+                        <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
+                        <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
+                            Tidak Ada yang di pesan.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +95,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function validateForm() {
+            var nama = document.getElementById('nama').value;
+            var harga = document.getElementById('harga').value;
+            var deskripsi = document.getElementById('deskripsi').value;
+
+            if (nama === "" || harga === "" || deskripsi === "") {
+                document.getElementById('empty-fields-alert').style.display = 'block';
+                return false; // Prevent form submission
+            } else {
+                document.getElementById('empty-fields-alert').style.display = 'none';
+                return true; // Allow form submission
+            }
+        }
+
         $(document).ready(function() {
             $('.increment-btn').click(function() {
                 var id = $(this).data('id');
@@ -127,6 +149,7 @@
                     },
                 });
             });
+
             $('.minus').click(function() {
                 var id = $(this).data('id');
                 var name = $(this).data('name');
@@ -150,6 +173,21 @@
                         quantity: quantity
                     },
                 });
+            });
+
+            $('#order-button').click(function() {
+                var hasOrder = false;
+                $('.quantity').each(function() {
+                    if (parseInt($(this).text()) > 0) {
+                        hasOrder = true;
+                    }
+                });
+
+                if (hasOrder) {
+                    window.location.href = '{{ route('admin.transaction.cart') }}';
+                } else {
+                    $('#no-order-alert').show();
+                }
             });
         });
     </script>

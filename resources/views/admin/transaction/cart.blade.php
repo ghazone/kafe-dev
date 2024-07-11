@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-weight-bold h5 text-dark leading-tight">
-            {{ __('Transaction') }}
+            {{ __('Transaksi') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
-                                {{ session('success') }}
+                                {{ session('success') }} <a href="{{ route('history') }}">Lihat Riwayat</a>
                             </div>
                         @endif
                         @if (session('error'))
@@ -63,7 +63,8 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <form action="{{ route('transaction.store') }}" method="POST">
+                            <form id="order-form" action="{{ route('transaction.store') }}" method="POST"
+                                onsubmit="return validateOrderForm()">
                                 @csrf
                                 <input type="hidden" name="total" value="{{ $totalHarga }}">
                                 <label for="payment-method" class="form-label">Pilih Pembayaran</label>
@@ -72,11 +73,14 @@
                                     <option value="credit_card">Kartu Kredit</option>
                                 </select>
                                 <div class="d-flex justify-content-between mt-3">
-                                    <a href="{{ route('admin.transaction.index') }}" class="btn btn-secondary">Kembali
-                                        ke pesanan</a>
+                                    <a href="{{ route('admin.transaction.index') }}" class="btn btn-secondary">Kembali ke pesanan</a>
                                     <button class="btn btn-primary" type="submit">Pesan Sekarang</button>
                                 </div>
                             </form>
+
+                            <div id="no-order-alert" class="alert alert-warning mt-3" style="display: none;">
+                                Tidak ada pesanan yang dipilih.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,6 +103,15 @@
                     location.reload(); // reload halaman setelah pembaruan
                 }
             });
+        }
+
+        function validateOrderForm() {
+            var totalHarga = parseFloat($('input[name="total"]').val());
+            if (totalHarga <= 0) {
+                $('#no-order-alert').show();
+                return false;
+            }
+            return true;
         }
     </script>
 </x-app-layout>

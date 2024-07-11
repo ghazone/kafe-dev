@@ -89,7 +89,12 @@ class TransactionController extends Controller
         }
 
         session()->forget('cart');
-        return redirect()->route('admin.transaction.cart')->with('success', 'Pesanan Succes, pesanan anda sedang di buatkan!, Tunggu ');
+        return redirect()->route('admin.transaction.success')->with('success', 'Pesanan Succes, pesanan anda sedang di buatkan!, Tunggu ');
+    }
+
+    public function success()
+    {
+        return view('admin.transaction.success');
     }
 
     public function confirmation()
