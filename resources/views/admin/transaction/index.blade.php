@@ -47,7 +47,7 @@
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
-
+                    <div class="overflow-auto">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -83,9 +83,14 @@
                                 @endforeach
                             </tbody>
                         </table>
+<<<<<<< HEAD
                         <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
                         <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
                             Tidak Ada yang di pesan.
+=======
+                        <button class="btn btn-primary" type="button"
+                            onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
+>>>>>>> 43089ca296458b7ee26fe66f202acde5e294eb98
                         </div>
                     </div>
                 </div>
