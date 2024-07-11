@@ -41,7 +41,7 @@
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
-
+                    <div class="overflow-auto">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -79,6 +79,7 @@
                         </table>
                         <button class="btn btn-primary" type="button"
                             onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@
                                 </button>
                             </div>
                         </form>
-
+                    <div class="overflow-auto">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -74,6 +74,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
                         <a href="{{ route('transaction.index') }}" class="btn btn-primary">Pesan</a>
                     </div>
                 </div>

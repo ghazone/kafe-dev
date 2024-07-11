@@ -16,8 +16,9 @@ class HistoryController extends Controller
     public function index()
     {
         $auth = auth()->user()->id;
-        $transactions = Transaction::where('user_id', $auth)->get(); // Ambil semua transaksi untuk ditampilkan di history
-
+        $transactions = Transaction::where('user_id', $auth) // Ambil semua transaksi untuk ditampilkan di history
+                                    ->orderBy('created_at', 'desc')
+                                    -> get();
         
         return view('admin.product.history', compact('transactions'));
     }
@@ -40,14 +41,19 @@ class HistoryController extends Controller
 
         return response()->json([
             'menu' => $transaction->pesanan->map(function ($pesanan) {
+                $jumlah = $pesanan->jumlah_pesanan ?? 0;
+                $harga = $pesanan->menu->harga ?? 0;
                 return [
                     'nama_menu' => $pesanan->menu->Nama_menu,
                     'id_menu' => $pesanan->id_menu,
-                    'jumlah_pesanan' => $pesanan->jumlah_pesanan,
+                    'jumlah_pesanan' => $jumlah,
+                    'harga_menu' => $harga,
+                    'subtotal' => $jumlah * $harga
                 ];
             }),
-            'total_harga' => $transaction->total_harga,
-            'payment_method' => $transaction->payment_method,
+            'total_harga' => $transaction->total_harga ?? 'Tidak ada',
+            'payment_method' => $transaction->payment_method ?? 'Tidak ada',
         ]);
     }
+
 }

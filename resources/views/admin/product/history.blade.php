@@ -18,12 +18,11 @@
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
-                        <div class="overflow-auto">
+                    <div class="overflow-auto">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>ID Transaksi</th>
-                                    <th>User ID</th>
                                     <th>Total Harga</th>
                                     <th>Payment</th>
                                     <th>Date</th>
@@ -34,7 +33,6 @@
                                 @foreach ($transactions as $transaction)
                                 <tr>
                                     <td>{{ $transaction->id }}</td>
-                                    <td>{{ $transaction->user_id }}</td>
                                     <td>{{ $transaction->total_harga }}</td>
                                     <td>{{ $transaction->payment_method }}</td>
                                     <td>{{ $transaction->created_at->format('D/m/Y') }}</td>
@@ -47,83 +45,81 @@
                             </tbody>
                         </table>
                     </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+ </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nama Menu</th>
+                                <th>ID Menu</th>
+                                <th>Jumlah</th>
+                                <th>Harga</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-details-body">
+                            <!-- Dynamic content will be added here -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="nama-pesanan" class="form-label">Nama Menu</label>
-                        <input type="text" class="form-control" id="nama-pesanan" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="id-menu" class="form-label">ID Menu</label>
-                        <input type="text" class="form-control" id="id-menu" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="total-harga" class="form-label">Total Harga</label>
-                        <input type="text" class="form-control" id="total-harga" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="payment-method" class="form-label">Payment</label>
-                        <input type="text" class="form-control" id="payment-method" disabled>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.edit-btn').click(function() {
-                var transactionId = $(this).data('id');
-                var url = "{{ route('history.getTransactionDetails', ':id') }}";
-                url = url.replace(':id', transactionId);
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.edit-btn').click(function() {
+            var transactionId = $(this).data('id');
+            var url = "{{ route('history.getTransactionDetails', ':id') }}";
+            url = url.replace(':id', transactionId);
 
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    success: function(data) {
-                        // Kosongkan field modal sebelum mengisinya
-                        $('#nama-pesanan').val('');
-                        $('#id-menu').val('');
-                        $('#total-harga').val('');
-                        $('#payment-method').val('');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(data) {
+                    // Mengosongkan isi tabel
+                    $('#transaction-details-body').empty();
 
-                        // Mengisi data modal
-                        if (data.menu.length > 0) {
-                            // Menggabungkan semua nama menu dan id menu
-                            var namaMenu = data.menu.map(item => item.nama_menu).join(', ');
-                            var idMenu = data.menu.map(item => item.id_menu).join(', ');
-                            $('#nama-pesanan').val(namaMenu || 'Tidak ada');
-                            $('#id-menu').val(idMenu || 'Tidak ada');
-                        } else {
-                            $('#nama-pesanan').val('Tidak ada');
-                            $('#id-menu').val('Tidak ada');
-                        }
-                        $('#total-harga').val(data.total_harga || 'Tidak ada');
-                        $('#payment-method').val(data.payment_method || 'Tidak ada');
-                    },
-                    error: function() {
-                        alert('Data gagal diambil.');
-                    }
-                });
+                    // Mengisi data tabel
+                    data.menu.forEach(function(item) {
+                        var row = `<tr>
+                            <td>${item.nama_menu || 'Tidak ada'}</td>
+                            <td>${item.id_menu || 'Tidak ada'}</td>
+                            <td>${item.jumlah_pesanan || 'Tidak ada'}</td>
+                            <td>${item.harga_menu || 'Tidak ada'}</td>
+                            <td>${item.subtotal || 'Tidak ada'}</td>
+                        </tr>`;
+                        $('#transaction-details-body').append(row);
+                    });
+
+                    $('#total-harga').html(data.total_harga || 'Tidak ada');
+                    $('#payment-method').html(data.payment_method || 'Tidak ada');
+                },
+                error: function() {
+                    alert('Data gagal diambil.');
+                }
             });
         });
-    </script>
+    });
+</script>
 </x-app-layout>

@@ -70,7 +70,7 @@
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
-
+                    <div class="overflow-auto">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -135,10 +135,11 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </x-app-layout>
