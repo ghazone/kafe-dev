@@ -67,10 +67,14 @@
                 @endif
 
                 <!-- Form untuk mencari user -->
-                <div class="card mb-3">
-                    <div class="card-body">
+                
+
+                <!-- Tabel untuk menampilkan daftar user -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="card mb-3">
                         <form id="search-form" action="" method="get">
-                            <div class="input-group mb-3">
+                            <div class="input-group">
                                 <input type="text" class="form-control" name="search" value=""
                                     placeholder="Masukkan kata kunci">
                                 <button class="btn btn-secondary" type="submit">
@@ -79,11 +83,8 @@
                             </div>
                         </form>
                     </div>
-                </div>
-
-                <!-- Tabel untuk menampilkan daftar user -->
-                <div class="card">
-                    <div class="card-body">
+            
+            
                         <div class="overflow-auto">
                             <table class="table table-striped">
                                 <thead>

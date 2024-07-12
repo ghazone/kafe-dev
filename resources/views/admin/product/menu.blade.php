@@ -40,8 +40,6 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body">
                         <li class="list-group-item collapse" id="collapse-add">
                         <form id="todo-form" action="{{ route('menu.post') }}" method="post" class="">
                             @csrf

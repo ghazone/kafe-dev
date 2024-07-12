@@ -5,13 +5,45 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+   <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order This Month </h5>
+                        <p class="card-text">{{ $transactionsThisMonth }} orders</p>
+                        <a href="{{ route('history') }}" class="btn btn-primary">Go </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gross Receive</h5>
+                        <p class="card-text">{{ $grosreceive }}</p>
+                        <a href="{{ route('history') }}" class="btn btn-primary">Go </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Order</h5>
+                        <p class="card-text">{{ $transactions }}</p>
+                        <a href="{{ route('history') }}" class="btn btn-primary">Go </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">User</h5>
+                        <p class="card-text">{{ $user }}</p>
+                        <a href="{{ route('admin.user')}}" class="btn btn-primary">Go </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </x-app-layout>
