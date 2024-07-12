@@ -1,3 +1,8 @@
+const filesToCache = [
+    '/public',
+    '/public/offline.html'
+];
+
 const preLoad = function () {
     return caches.open("offline").then(function (cache) {
         // caching index and important routes
@@ -9,10 +14,6 @@ self.addEventListener("install", function (event) {
     event.waitUntil(preLoad());
 });
 
-const filesToCache = [
-    '/',
-    '/offline.html'
-];
 
 const checkResponse = function (request) {
     return new Promise(function (fulfill, reject) {
