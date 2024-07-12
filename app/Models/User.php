@@ -24,7 +24,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function transactions():HasMany
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
@@ -50,5 +50,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; 
     }
 }
