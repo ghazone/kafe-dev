@@ -99,7 +99,6 @@
                 success: function(data) {
                     // Mengosongkan isi tabel
                     $('#transaction-details-body').empty();
-
                     // Mengisi data tabel
                     data.menu.forEach(function(item) {
                         var row = `<tr>
@@ -111,9 +110,8 @@
                         </tr>`;
                         $('#transaction-details-body').append(row);
                     });
-
-                    $('#total-harga').html(data.total_harga || 'Tidak ada');
-                    $('#payment-method').html(data.payment_method || 'Tidak ada');
+			var rowTotal = `<tr><td colspan='2'>Payment Method: ${data.payment_method}</td><td colspan='3'>Total: Rp.${data.total_harga}</td></tr>`
+			$('#transaction-details-body').append(rowTotal)
                 },
                 error: function() {
                     alert('Data gagal diambil.');

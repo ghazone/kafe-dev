@@ -83,6 +83,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
+                        <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
+                            Tidak Ada yang di pesan.
                         <button class="btn btn-primary" type="button"
                             onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
                         </div>
