@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Define the home route here
-
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/product', [ProductController::class, 'index'])->name('admin.product');
@@ -32,7 +32,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/menu', [MenuController::class, 'store'])->name('menu.post');
     Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
-    Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,15 +63,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Route::get('/pesanan', [PesananController::class, 'index'])->name('admin.pesanan');
 
 });
+Route::get('admin/transaksi', [TransactionController::class, 'index'])->name('admin.transaction.index');
+Route::get('transaction/cart', [TransactionController::class, 'showCart'])->name('admin.transaction.cart');
+Route::post('transaction/add-to-cart', [TransactionController::class, 'addToCart'])->name('transaction.addToCart');
+Route::delete('/transaction/remove-from-cart', [TransactionController::class, 'removeFromCart'])->name('transaction.removeFromCart');
+Route::post('/transaksi', [TransactionController::class, 'store'])->name('transaction.store');
+Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/transaction/success', [TransactionController::class, 'success'])->name('admin.transaction.success');
+Route::get('/transaction/confirmation', [TransactionController::class, 'confirmation'])->name('admin.transaction.confirmation');
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('admin/transaksi', [TransactionController::class, 'index'])->name('admin.transaction.index');
-    Route::post('/transaksi', [TransactionController::class, 'store'])->name('transaction.store');
-    Route::post('transaction/add-to-cart', [TransactionController::class, 'addToCart'])->name('transaction.addToCart');
-    Route::delete('/transaction/remove-from-cart', [TransactionController::class, 'removeFromCart'])->name('transaction.removeFromCart');
-    Route::get('transaction/cart', [TransactionController::class, 'showCart'])->name('admin.transaction.cart');
-    Route::get('/menu', [MenuController::class, 'index'])->name('menu');
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::get('/history/{id}/details', [HistoryController::class, 'showTransactionDetails'])->name('history.getTransactionDetails');
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
@@ -80,8 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
-    Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
-    Route::get('/transaction/confirmation', [TransactionController::class, 'confirmation'])->name('admin.transaction.confirmation');
 });
 
 

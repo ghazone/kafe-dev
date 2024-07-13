@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
@@ -73,9 +74,8 @@ class TransactionController extends Controller
         if (empty($cart)) {
             return redirect()->route('admin.transaction.cart')->with('error', 'Cart is empty');
         }
-
         $transaction = Transaction::create([
-            'user_id' => Auth::id(),
+            'user_id' => Auth::id() || User::where('usertype','admin'),
             'total_harga' => $request->input('total'),
             'payment_method' => $request->input('payment_method'),
         ]);

@@ -57,7 +57,6 @@
                                         <th>Stok</th>
                                         <th>Aksi</th>
                                     </tr>
-<<<<<<< HEAD
                                 </thead>
                                 <tbody>
                                     @foreach ($menus as $item)
@@ -87,18 +86,7 @@
                             <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
                             <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
                                 Tidak Ada yang di pesan.
-                                <button class="btn btn-primary" type="submit" >Pesan</button>
                             </div>
-=======
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
-                        <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
-                            Tidak Ada yang di pesan.
-                        <button class="btn btn-primary" type="button"
-                            onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
->>>>>>> 6ca2397cdf376db09743bb7c77179b7192af34fd
                         </div>
                     </div>
                 </div>

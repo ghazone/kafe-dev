@@ -64,7 +64,7 @@
                         </div>
                         <div class="mt-4">
                             <form id="order-form" action="{{ route('transaction.store') }}" method="POST"
-                                onsubmit="return validateOrderForm()">
+                                onsubmit="return false;">
                                 @csrf
                                 <input type="hidden" name="total" value="{{ $totalHarga }}">
                                 <label for="payment-method" class="form-label">Pilih Pembayaran</label>
@@ -73,7 +73,8 @@
                                     <option value="credit_card">Kartu Kredit</option>
                                 </select>
                                 <div class="d-flex justify-content-between mt-3">
-                                    <a href="{{ route('admin.transaction.index') }}" class="btn btn-secondary">Kembali ke pesanan</a>
+                                    <a href="{{ route('admin.transaction.index') }}" class="btn btn-secondary">Kembali
+                                        ke pesanan</a>
                                     <button class="btn btn-primary" type="submit">Pesan Sekarang</button>
                                 </div>
                             </form>
@@ -87,7 +88,46 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Detail Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Nama Menu</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transaction-details-body" class="table-group-divider">
+                                <!-- Dynamic content will be added here -->
+                            </tbody>
+                            <tfoot id="total-price-container" class="text-end fw-bold">
+                                <td colspan="4">
+                                    Total: Rp. <span id="total-price">0</span>
+                                </td>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirm-order-btn">Konfirmasi Pesanan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function updateCart(productId, action) {
@@ -105,13 +145,45 @@
             });
         }
 
-        function validateOrderForm() {
-            var totalHarga = parseFloat($('input[name="total"]').val());
-            if (totalHarga <= 0) {
-                $('#no-order-alert').show();
-                return false;
-            }
-            return true;
-        }
+        $(document).ready(function() {
+            // Handle "Pesan Sekarang" button click
+            $('#order-form').submit(function(event) {
+                event.preventDefault();
+
+                // Empty the modal table body
+                $('#transaction-details-body').empty();
+
+                // Get the cart data
+                var cart = @json($cart);
+                var totalHarga = 0;
+
+                // Loop through the cart items and append them to the modal table
+                $.each(cart, function(id, details) {
+                    var subtotal = details.price * details.quantity;
+                    var row = `
+                        <tr>
+                            <td>${details.name}</td>    
+                            <td>${details.quantity}</td>
+                            <td>${details.price}</td>
+                            <td>${subtotal}</td>
+                        </tr>
+                    `;
+                    $('#transaction-details-body').append(row);
+                    totalHarga += subtotal;
+                });
+
+                // Update total price in modal
+                $('#total-price').text(totalHarga);
+                // $('#total-price-container').append(totalHarga);
+
+                // Show the modal
+                $('#orderModal').modal('show');
+            });
+
+            // Handle order confirmation
+            $('#confirm-order-btn').click(function() {
+                $('#order-form')[0].submit();
+            });
+        });
     </script>
 </x-app-layout>
