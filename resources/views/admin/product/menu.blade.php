@@ -133,6 +133,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {{ $menus->links() }}
                  </div>
             </div>
         </div>

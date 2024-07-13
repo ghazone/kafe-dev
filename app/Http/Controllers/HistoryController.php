@@ -15,10 +15,13 @@ class HistoryController extends Controller
      */
     public function index()
     {
+        $max_data = 5;
         $auth = auth()->user()->id;
-        $transactions = Transaction::where('user_id', $auth) // Ambil semua transaksi untuk ditampilkan di history
+        $transactions = Transaction::where('user_id', $auth) 
                                     ->orderBy('created_at', 'desc')
                                     -> get();
+
+        $transactions = Transaction::orderBy('created_at', 'desc')->paginate($max_data);
         
         return view('admin.product.history', compact('transactions'));
     }
