@@ -45,8 +45,13 @@
             </x-primary-button>
 
         </div>
-        <a href="{{ route('menu') }}" class="underline">
-            {{ __('Lanjutkan tanpa akun') }}
-        </a>
+        <div class="flex items-center justify-between mt-4">
+            <a href="{{ route('menu') }}" class="underline">
+                {{ __('Lanjutkan tanpa akun') }}
+            </a>
+            <a href="{{ route('register') }}" class="underline">
+                {{ __('daftar') }}
+            </a>
+        </div>
     </form>
 </x-guest-layout>

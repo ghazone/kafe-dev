@@ -5,7 +5,7 @@
     </x-slot>
 
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Transaction</h1>
+        <h1 class="text-center mb-4">History Pesanan</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
