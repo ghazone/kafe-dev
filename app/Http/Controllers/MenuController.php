@@ -8,8 +8,9 @@ use App\Models\Menu; // Sesuaikan dengan nama model Anda
 class MenuController extends Controller
 {
     public function index()
-    {
+    {   
         $menus = Menu::all();
+        $menus = Menu::orderBy('Nama_menu', 'desc')->paginate(5);
         return view('admin.product.menu', compact('menus'));
     }
 

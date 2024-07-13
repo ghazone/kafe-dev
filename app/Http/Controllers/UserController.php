@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         // Mengambil semua data user
         $data = User::all();
-
+        $data = User::orderBy('id', 'desc')->paginate(5);
         // Mengirimkan data ke view admin.product.user
         return view('admin.product.user', compact('data'));
     }

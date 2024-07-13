@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
     Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
     Route::get('/transaction/confirmation', [TransactionController::class, 'confirmation'])->name('admin.transaction.confirmation');
+    Route::get('/transaction/confirmation', [TransactionController::class, 'success'])->name('admin.transaction.success');
 });
 
 

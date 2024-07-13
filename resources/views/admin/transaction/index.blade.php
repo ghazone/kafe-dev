@@ -47,160 +47,151 @@
                                 <button class="btn btn-secondary" type="submit">Cari</button>
                             </div>
                         </form>
-                        <div class="overflow-auto">
-                            <table class="table table-striped table-hover">
-                                <thead>
+                    <div class="overflow-auto">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                    <th>Deskripsi</th>
+                                    <th>Stok</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($menus as $item)
                                     <tr>
-                                        <th>Nama</th>
-                                        <th>Harga</th>
-                                        <th>Deskripsi</th>
-                                        <th>Stok</th>
-                                        <th>Aksi</th>
+                                        <td>{{ $item->Nama_menu }}</td>
+                                        <td>{{ $item->harga }}</td>
+                                        <td>{{ $item->deskripsi }}</td>
+                                        <td class="quantity" data-id="{{ $item->id }}">0</td>
+                                        <td class="d-flex justify-content-start align-items-center">
+                                            <button class="btn btn-sm decrement-btn minus"
+                                                data-id="{{ $item->id }}" data-name="{{ $item->Nama_menu }}"
+                                                data-price="{{ $item->harga }}"
+                                                style="background-color: transparent; border: none; margin-right: 5px;">
+                                                <i class="bi bi-dash-square" style="font-size: 1.2rem;"></i>
+                                            </button>
+                                            <button class="btn btn-sm increment-btn add-to-cart"
+                                                data-id="{{ $item->id }}" data-name="{{ $item->Nama_menu }}"
+                                                data-price="{{ $item->harga }}"
+                                                style="background-color: transparent; border: none;">
+                                                <i class="bi bi-plus-square" style="font-size: 1.2rem;"></i>
+                                            </button>
+                                        </td>
                                     </tr>
-<<<<<<< HEAD
-                                </thead>
-                                <tbody>
-                                    @foreach ($menus as $item)
-                                        <tr>
-                                            <td>{{ $item->Nama_menu }}</td>
-                                            <td>{{ $item->harga }}</td>
-                                            <td>{{ $item->deskripsi }}</td>
-                                            <td class="quantity" data-id="{{ $item->id }}">0</td>
-                                            <td class="d-flex justify-content-start align-items-center">
-                                                <button class="btn btn-sm decrement-btn minus"
-                                                    data-id="{{ $item->id }}" data-name="{{ $item->Nama_menu }}"
-                                                    data-price="{{ $item->harga }}"
-                                                    style="background-color: transparent; border: none; margin-right: 5px;">
-                                                    <i class="bi bi-dash-square" style="font-size: 1.2rem;"></i>
-                                                </button>
-                                                <button class="btn btn-sm increment-btn add-to-cart"
-                                                    data-id="{{ $item->id }}" data-name="{{ $item->Nama_menu }}"
-                                                    data-price="{{ $item->harga }}"
-                                                    style="background-color: transparent; border: none;">
-                                                    <i class="bi bi-plus-square" style="font-size: 1.2rem;"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
-                            <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
-                                Tidak Ada yang di pesan.
-                                <button class="btn btn-primary" type="submit" >Pesan</button>
-                            </div>
-=======
                                 @endforeach
                             </tbody>
                         </table>
+                         {{ $menus->links() }}
                         <button class="btn btn-primary" type="button" id="order-button">Pesan</button>
                         <div id="no-order-alert" class="alert alert-danger mt-3" style="display: none;">
                             Tidak Ada yang di pesan.
                         <button class="btn btn-primary" type="button"
                             onclick="window.location.href='{{ route('admin.transaction.cart') }}'">Pesan</button>
->>>>>>> 6ca2397cdf376db09743bb7c77179b7192af34fd
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            function validateForm() {
-                var nama = document.getElementById('nama').value;
-                var harga = document.getElementById('harga').value;
-                var deskripsi = document.getElementById('deskripsi').value;
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function validateForm() {
+            var nama = document.getElementById('nama').value;
+            var harga = document.getElementById('harga').value;
+            var deskripsi = document.getElementById('deskripsi').value;
 
-                if (nama === "" || harga === "" || deskripsi === "") {
-                    document.getElementById('empty-fields-alert').style.display = 'block';
-                    return false; // Prevent form submission
-                } else {
-                    document.getElementById('empty-fields-alert').style.display = 'none';
-                    return true; // Allow form submission
-                }
+            if (nama === "" || harga === "" || deskripsi === "") {
+                document.getElementById('empty-fields-alert').style.display = 'block';
+                return false; // Prevent form submission
+            } else {
+                document.getElementById('empty-fields-alert').style.display = 'none';
+                return true; // Allow form submission
             }
+        }
 
-            $(document).ready(function() {
-                $('.increment-btn').click(function() {
-                    var id = $(this).data('id');
-                    var quantityElement = $('.quantity[data-id="' + id + '"]');
-                    var currentQuantity = parseInt(quantityElement.text());
-                    quantityElement.text(currentQuantity + 1);
-                    console.log(id, currentQuantity)
-                });
+        $(document).ready(function() {
+            $('.increment-btn').click(function() {
+                var id = $(this).data('id');
+                var quantityElement = $('.quantity[data-id="' + id + '"]');
+                var currentQuantity = parseInt(quantityElement.text());
+                quantityElement.text(currentQuantity + 1);
+                console.log(id, currentQuantity)
+            });
 
-                $('.decrement-btn').click(function() {
-                    var id = $(this).data('id');
-                    var quantityElement = $('.quantity[data-id="' + id + '"]');
-                    var currentQuantity = parseInt(quantityElement.text());
-                    console.log(id, currentQuantity)
-                    if (currentQuantity > 0) {
-                        quantityElement.text(currentQuantity - 1);
-                    }
-                });
+            $('.decrement-btn').click(function() {
+                var id = $(this).data('id');
+                var quantityElement = $('.quantity[data-id="' + id + '"]');
+                var currentQuantity = parseInt(quantityElement.text());
+                console.log(id, currentQuantity)
+                if (currentQuantity > 0) {
+                    quantityElement.text(currentQuantity - 1);
+                }
+            });
 
-                $('.add-to-cart').click(function() {
-                    var id = $(this).data('id');
-                    var name = $(this).data('name');
-                    var price = $(this).data('price');
-                    var quantityElement = $('.quantity[data-id="' + id + '"]');
-                    var currentQuantity = parseInt(quantityElement.text());
+            $('.add-to-cart').click(function() {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var price = $(this).data('price');
+                var quantityElement = $('.quantity[data-id="' + id + '"]');
+                var currentQuantity = parseInt(quantityElement.text());
 
-                    var quantity = currentQuantity;
-                    console.log(quantity)
-                    $.ajax({
-                        url: '{{ route('transaction.addToCart') }}',
-                        method: "POST",
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: id,
-                            name: name,
-                            price: price,
-                            quantity: quantity
-                        },
-                    });
-                });
-
-                $('.minus').click(function() {
-                    var id = $(this).data('id');
-                    var name = $(this).data('name');
-                    var price = $(this).data('price');
-                    var quantityElement = $('.quantity[data-id="' + id + '"]');
-                    var currentQuantity = parseInt(quantityElement.text());
-
-                    var quantity = currentQuantity;
-                    var method = quantity == 0 ? 'delete' : 'post'
-                    var url = quantity == 0 ? '{{ route('transaction.removeFromCart') }}' :
-                        '{{ route('transaction.addToCart') }}';
-                    console.log(quantity, method)
-                    $.ajax({
-                        url: url,
-                        method: method,
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: id,
-                            name: name,
-                            price: price,
-                            quantity: quantity
-                        },
-                    });
-                });
-
-                $('#order-button').click(function() {
-                    var hasOrder = false;
-                    $('.quantity').each(function() {
-                        if (parseInt($(this).text()) > 0) {
-                            hasOrder = true;
-                        }
-                    });
-
-                    if (hasOrder) {
-                        window.location.href = '{{ route('admin.transaction.cart') }}';
-                    } else {
-                        $('#no-order-alert').show();
-                    }
+                var quantity = currentQuantity;
+                console.log(quantity)
+                $.ajax({
+                    url: '{{ route('transaction.addToCart') }}',
+                    method: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id,
+                        name: name,
+                        price: price,
+                        quantity: quantity
+                    },
                 });
             });
-        </script>
+
+            $('.minus').click(function() {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var price = $(this).data('price');
+                var quantityElement = $('.quantity[data-id="' + id + '"]');
+                var currentQuantity = parseInt(quantityElement.text());
+
+                var quantity = currentQuantity;
+                var method = quantity == 0 ? 'delete' : 'post'
+                var url = quantity == 0 ? '{{ route('transaction.removeFromCart') }}' :
+                    '{{ route('transaction.addToCart') }}';
+                console.log(quantity, method)
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id,
+                        name: name,
+                        price: price,
+                        quantity: quantity
+                    },
+                });
+            });
+
+            $('#order-button').click(function() {
+                var hasOrder = false;
+                $('.quantity').each(function() {
+                    if (parseInt($(this).text()) > 0) {
+                        hasOrder = true;
+                    }
+                });
+
+                if (hasOrder) {
+                    window.location.href = '{{ route('admin.transaction.cart') }}';
+                } else {
+                    $('#no-order-alert').show();
+                }
+            });
+        });
+    </script>
 </x-app-layout>

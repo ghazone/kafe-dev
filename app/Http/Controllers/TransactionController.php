@@ -13,6 +13,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $menus = Menu::all();
+        $menus = Menu::orderBy('Nama_menu', 'desc')->paginate(5);
         $transactions = Transaction::all(); // Inisialisasi $transactions
 
         if ($request->has('search')) {

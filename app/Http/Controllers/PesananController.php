@@ -13,6 +13,7 @@ class PesananController extends Controller
     public function index()
     {
         $menus = Menu::all(); // Gantikan dengan query sesuai kebutuhan Anda
+        $menus = Menu::orderBy('Nama_menu', 'desc')->paginate(5);
         return view("admin.product.pesanan", ['menus' => $menus]);
     }
 
